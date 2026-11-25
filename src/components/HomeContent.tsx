@@ -7,6 +7,9 @@ import { useMode } from "@/lib/mode";
 
 const grid = "grid grid-cols-4 gap-x-4 md:grid-cols-12 md:gap-x-6";
 
+const isKeyword = (p: (typeof intro)[number] | undefined) =>
+  typeof p === "object" && p !== null && "discipline" in p;
+
 export default function HomeContent() {
   const mode = useMode();
   const preview = useRef<HTMLDivElement>(null);
@@ -53,23 +56,38 @@ export default function HomeContent() {
 
   return (
     <section className={grid}>
-      <p className="col-span-4 text-intro md:col-span-8 md:text-intro-lg">
+      <p className="col-span-4 text-intro [text-wrap:pretty] md:col-span-8 md:text-intro-lg">
         {intro.map((part, i) => {
-          if (typeof part === "string") return part;
+          if (typeof part === "string") {
+            // Words touching a keyword are rendered with it (see below), so trim them here.
+            let s = part;
+            if (isKeyword(intro[i - 1])) s = s.replace(/^\S*/, "");
+            if (isKeyword(intro[i + 1])) s = s.replace(/\S+\s*$/, "");
+            return s;
+          }
           if ("break" in part) return <br key={i} />;
           const d = disciplines[part.discipline];
+          const prev = intro[i - 1];
+          const next = intro[i + 1];
+          // Glue the word before and the punctuation after to the keyword, so a line
+          // never ends on a lone word or starts with a comma.
+          const before = typeof prev === "string" ? (prev.match(/(\S+)\s*$/)?.[1] ?? "") : "";
+          const after = typeof next === "string" ? (next.match(/^\S*/)?.[0] ?? "") : "";
           return (
-            <Link
-              key={i}
-              href={`/${d.slug}`}
-              onPointerEnter={() => show(d.preview, capitalise(d.label))}
-              onPointerMove={move}
-              onPointerLeave={hide}
-              className="whitespace-nowrap px-[5px] text-on-accent"
-              style={{ background: d.preview }}
-            >
-              {d.label}
-            </Link>
+            <span key={i} className="whitespace-nowrap">
+              {before && `${before} `}
+              <Link
+                href={`/${d.slug}`}
+                onPointerEnter={() => show(d.preview, capitalise(d.label))}
+                onPointerMove={move}
+                onPointerLeave={hide}
+                className="px-[5px] text-on-accent"
+                style={{ background: d.preview }}
+              >
+                {d.label}
+              </Link>
+              {after}
+            </span>
           );
         })}
       </p>
