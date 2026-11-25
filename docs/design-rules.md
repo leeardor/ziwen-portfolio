@@ -1,5 +1,7 @@
 # Design rules
 
+> 所有页面和组件还必须遵守 [interface-guidelines.md](interface-guidelines.md)（Rauno 的 Web Interface Guidelines）。两者冲突时以这份为准。
+
 网站的设计规则。Figma 和代码都以这份为准。
 标记 **[已定]** 的是已经确认过的；标记 **[建议]** 的是草稿，等确认后改成 [已定]。
 
@@ -182,9 +184,9 @@ Figma：文字样式 `Desktop/*` 和 `Mobile/*`。代码：Tailwind 的默认字
 
 ## 5. 动效 [建议]
 
-- 时长：快 150ms（hover），中 250ms（出现和切换），慢 400ms（页面级）。
+- 时长：交互动效一律 ≤ 200ms（hover 150ms，出现和切换 200ms）。只有第一次访问的开屏不受限制。
 - 曲线：`cubic-bezier(0.22, 1, 0.36, 1)`，先快后慢。
-- hover 预览：淡入加轻微放大（0.96 到 1）。
+- hover 预览：淡入加轻微放大（0.96 到 1），≤ 200ms。hover 样式只在 `@media (hover: hover)` 下生效，手机上不出现。
 - 开屏的手写 “Ziwen's archive” 一笔一笔写出来，只在第一次访问时播放（见 0.3 和 2）。
 - 高频动作（导航、筛选、列表 hover）的动效要最朴素、最快，用 150ms，不加花样（见 0.2）。
 - 系统开启“减少动态效果”时，关闭所有位移和缩放，只保留淡入淡出。
