@@ -45,11 +45,10 @@ export const indexOrder: (keyof typeof disciplines)[] = [
   "production",
 ];
 
-// Real links still to come.
 export const contact = [
-  { label: "Email", href: "#" },
-  { label: "Instagram", href: "#" },
-  { label: "LinkedIn", href: "#" },
+  { label: "Email", href: "mailto:li.ziwen.5201@gmail.com" },
+  { label: "Instagram", href: "https://www.instagram.com/l.ziwen/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/ziwen-li" },
 ];
 
 export const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);

@@ -13,7 +13,11 @@ export default function Footer() {
       <ul>
         {contact.map((link, i) => (
           <li key={link.label} className={i === 1 ? "mt-4" : undefined}>
-            <a href={link.href} className="transition-colors duration-150 hover:text-accent">
+            <a
+              href={link.href}
+              {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="transition-colors duration-150 hover:text-accent"
+            >
               {link.label}
             </a>
           </li>
