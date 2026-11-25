@@ -1,25 +1,37 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
-import { capitalise, disciplines } from "@/lib/content";
+import KeywordParagraph from "@/components/KeywordParagraph";
+import { capitalise, disciplineNotes, disciplines } from "@/lib/content";
+
+const grid = "grid grid-cols-4 gap-x-4 md:grid-cols-12 md:gap-x-6";
 
 export function generateStaticParams() {
   return Object.keys(disciplines).map((discipline) => ({ discipline }));
 }
 
-// Placeholder until each discipline gets its notes and project list.
 export default async function DisciplinePage({ params }: PageProps<"/[discipline]">) {
   const { discipline } = await params;
   const d = disciplines[discipline];
   if (!d) notFound();
+  const notes = disciplineNotes[discipline];
 
   return (
     <main className="flex min-h-svh flex-col px-4 pb-8 pt-24 md:px-10 md:pb-10 md:pt-32">
-      <p className="text-intro md:text-intro-lg">{capitalise(d.label)}</p>
-      <p className="mt-4">Notes and projects for this page are on the way.</p>
-      <p className="mt-4">
-        <Link href="/" className="rise-host underline underline-offset-4"><span className="rise">Back to home</span></Link>
-      </p>
+      {notes ? (
+        <section className={grid}>
+          <KeywordParagraph parts={notes} />
+        </section>
+      ) : (
+        // Placeholder until this discipline gets its notes.
+        <>
+          <p className="text-intro md:text-intro-lg">{capitalise(d.label)}</p>
+          <p className="mt-4">Notes and projects for this page are on the way.</p>
+          <p className="mt-4">
+            <Link href="/" className="rise-host underline underline-offset-4"><span className="rise">Back to home</span></Link>
+          </p>
+        </>
+      )}
       <Footer />
     </main>
   );

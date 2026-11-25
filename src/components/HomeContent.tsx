@@ -1,144 +1,55 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
-import { capitalise, type Discipline, disciplines, indexLine, indexOrder, intro } from "@/lib/content";
+import { capitalise, disciplineKeyword, disciplines, indexLine, indexOrder, intro } from "@/lib/content";
 import { useMode } from "@/lib/mode";
+import KeywordParagraph, { type Part } from "./KeywordParagraph";
+import { usePreview } from "./preview";
 
 const grid = "grid grid-cols-4 gap-x-4 md:grid-cols-12 md:gap-x-6";
 
-// Light ink wash over images so off-white text stays readable on any photo.
-const shade = "linear-gradient(rgb(18 18 18 / 0.35), rgb(18 18 18 / 0.35))";
-
-// No widows: the last two words of a paragraph or line group never split.
+// No widows: the last two words of a line never split.
 const noWidow = (s: string) => s.replace(/ (\S+\s*)$/, "\u00a0$1");
 
-const isKeyword = (p: (typeof intro)[number] | undefined) =>
-  typeof p === "object" && p !== null && "discipline" in p;
+function IndexList() {
+  const { show, move, hide, box } = usePreview();
+  return (
+    <section>
+      <p>{noWidow(indexLine)}</p>
+      <ul className="mt-8 border-t border-hairline">
+        {indexOrder.map((slug, i) => {
+          const d = disciplines[slug];
+          return (
+            <li key={slug} className="border-b border-hairline">
+              <Link
+                href={`/${d.slug}`}
+                onPointerEnter={() => show(disciplineKeyword(d))}
+                onPointerMove={move}
+                onPointerLeave={hide}
+                className={`${grid} rise-host py-3`}
+              >
+                <span className="rise tabular col-span-1 justify-self-start">{String(i + 1).padStart(2, "0")}</span>
+                <span className="col-span-3 md:col-span-11"><span className="rise">{capitalise(d.label)}</span></span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+      {box}
+    </section>
+  );
+}
+
+const introParts: Part[] = intro.map((p) =>
+  typeof p === "object" && "discipline" in p ? { keyword: disciplineKeyword(disciplines[p.discipline]) } : p,
+);
 
 export default function HomeContent() {
   const mode = useMode();
-  const preview = useRef<HTMLDivElement>(null);
-
-  // Pointer position goes straight to the DOM via a ref: no React render per frame.
-  const show = (d: Discipline) => {
-    const el = preview.current;
-    if (!el || !window.matchMedia("(hover: hover)").matches) return;
-    // No grey wash on the preview: only a soft shadow at the bottom behind the caption.
-    el.style.background = `linear-gradient(to top, rgb(18 18 18 / 0.45), transparent 35%), url(${d.image}) center / cover, ${d.preview}`;
-    const label = capitalise(d.label);
-    el.textContent = label;
-    el.style.opacity = "1";
-  };
-  const move = (e: React.PointerEvent) => {
-    const el = preview.current;
-    if (!el) return;
-    // Right of the pointer first: near the right edge the box slides left just enough to fit
-    // (it sits below the pointer, so it never covers it). Only vertically does it flip above.
-    const cx = Math.max(8, Math.min(e.clientX + 16, window.innerWidth - el.offsetWidth - 8));
-    const below = e.clientY + 16 + el.offsetHeight <= window.innerHeight - 8;
-    const cy = Math.max(8, below ? e.clientY + 16 : e.clientY - 16 - el.offsetHeight);
-    el.style.transform = `translate(${cx}px, ${cy}px)`;
-  };
-  const hide = () => {
-    if (preview.current) preview.current.style.opacity = "0";
-  };
-
-  // One preview box shared by both modes.
-  const previewBox = (
-    <div
-      ref={preview}
-      aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-40 flex h-[240px] w-[360px] items-end p-2 text-caption text-on-accent opacity-0 transition-opacity duration-150"
-    />
-  );
-
-  if (mode === "index") {
-    return (
-      <section>
-        <p>{noWidow(indexLine)}</p>
-        <ul className="mt-8 border-t border-hairline">
-          {indexOrder.map((slug, i) => {
-            const d = disciplines[slug];
-            return (
-              <li key={slug} className="border-b border-hairline">
-                <Link
-                  href={`/${d.slug}`}
-                  onPointerEnter={() => show(d)}
-                  onPointerMove={move}
-                  onPointerLeave={hide}
-                  className={`${grid} rise-host py-3`}
-                >
-                  <span className="rise tabular col-span-1 justify-self-start">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="col-span-3 md:col-span-11"><span className="rise">{capitalise(d.label)}</span></span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        {previewBox}
-      </section>
-    );
-  }
-
-  const nodes = intro.map((part, i) => {
-    if (typeof part === "string") {
-      // Words touching a keyword are rendered with it (see below), so trim them here.
-      let s = part;
-      if (isKeyword(intro[i - 1])) s = s.replace(/^\S*/, "");
-      if (isKeyword(intro[i + 1])) s = s.replace(/\S+\s*$/, "");
-      // One- and two-letter words ("I", "At", "on") stay with the next word, never alone at a line end.
-      s = s.replace(/(^|\s)(\S{1,2}) /g, "$1$2 ");
-      const next = intro[i + 1];
-      if (next === undefined || (typeof next === "object" && "break" in next)) s = noWidow(s);
-      return s;
-    }
-    if ("break" in part) return null; // group boundary, see groups below
-    const d = disciplines[part.discipline];
-    const prev = intro[i - 1];
-    const next = intro[i + 1];
-    // Glue the word before and the punctuation after to the keyword, so a line
-    // never ends on a lone word or starts with a comma.
-    const before = typeof prev === "string" ? (prev.match(/(\S+)\s*$/)?.[1] ?? "") : "";
-    const after = typeof next === "string" ? (next.match(/^\S*/)?.[0] ?? "") : "";
-    return (
-      <span key={i} className="whitespace-nowrap">
-        {before && `${before} `}
-        <Link
-          href={`/${d.slug}`}
-          onPointerEnter={() => show(d)}
-          onPointerMove={move}
-          onPointerLeave={hide}
-          className="kw rise-host px-[5px] [background:var(--chip)]"
-          style={{ "--chip": `${shade}, url(${d.image}) center / cover, ${d.preview}` } as React.CSSProperties}
-        >
-          {/* On hover rose rises through the text from the bottom (image stays). */}
-          <span className="rise">{d.label}</span>
-        </Link>
-        {after}
-      </span>
-    );
-  });
-
-  // Split at the line breaks into sentence groups.
-  const groups: React.ReactNode[][] = [[]];
-  intro.forEach((part, i) => {
-    if (typeof part === "object" && "break" in part) groups.push([]);
-    else groups[groups.length - 1].push(nodes[i]);
-  });
-
+  if (mode === "index") return <IndexList />;
   return (
     <section className={grid}>
-      {/* One continuous paragraph: sentences run on, no forced line breaks. */}
-      <p className="col-span-4 text-intro [text-wrap:balance] md:col-span-8 md:text-intro-lg">
-        {groups.map((g, gi) => (
-          <span key={gi}>
-            {gi > 0 && " "}
-            {g}
-          </span>
-        ))}
-      </p>
-      {previewBox}
+      <KeywordParagraph parts={introParts} />
     </section>
   );
 }

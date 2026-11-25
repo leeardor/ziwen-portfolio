@@ -1,5 +1,8 @@
 // Site copy. Facts only from my CV and portfolios (see docs/content.md).
 
+import type { Part } from "@/components/KeywordParagraph";
+import type { Keyword } from "@/components/preview";
+
 export type Discipline = {
   slug: string;
   label: string; // the highlighted word in the home intro
@@ -16,6 +19,49 @@ export const disciplines: Record<string, Discipline> = {
     label: "products and research",
     preview: "#3B2A35", image: "/keywords/products-and-research.jpg",
   },
+};
+
+export const disciplineKeyword = (d: Discipline): Keyword => ({
+  label: d.label, href: `/${d.slug}`, preview: d.preview, image: d.image,
+});
+
+// Projects. A project is listed under one discipline page; images come later.
+export type Project = { slug: string; title: string; discipline: string; preview: string; image?: string };
+
+export const projects: Record<string, Project> = {
+  farmily: { slug: "farmily", title: "Farmily", discipline: "products-and-research", preview: "#2F3A2C" },
+  "check-in": { slug: "check-in", title: "Check-in", discipline: "products-and-research", preview: "#2C3340" },
+  "within-reach": { slug: "within-reach", title: "Within Reach", discipline: "products-and-research", preview: "#263A4A" },
+  oceanfeel: { slug: "oceanfeel", title: "OceanFeel", discipline: "products-and-research", preview: "#1F2F3D" },
+  mediatek: { slug: "mediatek", title: "MediaTek", discipline: "products-and-research", preview: "#3A3328" },
+  "enigma-paper": { slug: "enigma-paper", title: "paper", discipline: "products-and-research", preview: "#3B2A35" },
+};
+
+const project = (slug: string): { keyword: Keyword } => {
+  const p = projects[slug];
+  return { keyword: { label: p.title, href: `/${p.discipline}/${p.slug}`, preview: p.preview, image: p.image } };
+};
+
+// Discipline pages, Notes mode: one paragraph like the home intro; project names are the keywords.
+// Plain, short sentences (references: rauno.me, emilkowal.ski).
+export const disciplineNotes: Record<string, Part[]> = {
+  "products-and-research": [
+    "In Fukuoka I helped research an Op art illusion, which became a ",
+    project("enigma-paper"),
+    ". At NUS I work with people: interviews, field visits, tests. I look for the pain point ",
+    { em: "no one has named" },
+    ". ",
+    project("farmily"),
+    " is an app where small farms design their packaging with AI and sell to shoppers nearby. ",
+    project("check-in"),
+    " is an AI design tool that checks whether an idea can actually be manufactured, which general AI tools leave out. ",
+    project("within-reach"),
+    " is a wristband for older adults who live alone. If they fall, their family knows right away. ",
+    project("oceanfeel"),
+    " is an exhibit we made with OceanX. Visually impaired visitors can touch deep-sea creatures and hear what they are. For ",
+    project("mediatek"),
+    " we found a new market for its chips on mining trucks.",
+  ],
 };
 
 // Home intro, Notes mode. Strings are plain text; objects are keyword links.
