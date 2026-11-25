@@ -29,7 +29,7 @@ memorable)? If it is neither, cut it. Novel moments must never make the site har
   per-visitor rate limit, and the key kept server-side.
 - **Two modes, site-wide: Notes (default) and Index.** A [Notes] [Index] switch on every page; the choice is remembered.
   Notes is my own short paragraph (3 to 5 sentences, at most 4 to 6 links); Index is a plain list for quick scanning.
-- **Home.** Notes: a self-intro whose keywords open the discipline pages, with a rectangular hover preview; contact at the bottom.
+- **Home.** Notes: a self-intro whose keywords open the discipline pages. Keywords sit on a small crop of the work (light text on image, no underline), with a rectangular hover preview; contact at the bottom.
   Index: every project as a list (no., name, discipline, client/context, year).
 - **Discipline pages.** Notes: a paragraph tying that discipline's main works together; project names preview on hover and open the project page.
   Index: the same list, filtered to that discipline.
