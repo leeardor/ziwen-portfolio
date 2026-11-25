@@ -42,7 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* Flag a first visit before paint, so the splash never flashes for returning visitors. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(!localStorage.getItem("zw-visited")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.setAttribute("data-splash","")}catch(e){}`,
+            __html: `try{if((location.hostname==="localhost"&&/[?&]splash/.test(location.search))||(!localStorage.getItem("zw-visited")&&!matchMedia("(prefers-reduced-motion: reduce)").matches))document.documentElement.setAttribute("data-splash","")}catch(e){}`,
           }}
         />
       </head>

@@ -135,7 +135,7 @@ Figma：Ziwen Portfolio Site → 🎨 Foundations。代码：`src/app/globals.cs
 
 其他地方（导航、列表、按钮、筛选、页脚）都不用手写。
 
-- 开屏的书写动画 [已定 2026-11-25，临时]：用单线草书字体 EMS Allure（SIL OFL，基于 Allura）生成笔画路径，按顺序一笔一笔画出，每笔时长按长度分配，共约 3.4 秒，停 0.5 秒后淡出。之后换成我自己的手写笔画。生成的数据在 src/components/splash-strokes.ts。
+- 开屏的书写动画 [已定 2026-11-25，临时]：用单线草书字体 EMS Allure（SIL OFL，基于 Allura）生成笔画路径，按顺序一笔一笔画出，每笔时长按长度分配，共约 3.4 秒，停 0.5 秒后淡出。之后换成我自己的手写笔画。生成的数据在 src/components/splash-strokes.ts。本地预览时在地址后加 `?splash` 可以强制重播（只在 localhost 有效，正式网站不受影响）。
 
 ### 手写的细节 [建议]
 
