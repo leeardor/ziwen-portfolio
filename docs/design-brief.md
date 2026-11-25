@@ -27,12 +27,14 @@ memorable)? If it is neither, cut it. Novel moments must never make the site har
   (who I am, how I define myself, why I work across so many fields, which fields).
   An "Enter the site" button skips it. Built in phase 2, on the Claude API, with a spend cap,
   per-visitor rate limit, and the key kept server-side.
-- **Home.** Name + one sentence that defines me. Discipline filter
-  (All / Brand / Photography / Creative / Production / Strategy).
-  Two views: large image grid, and an index list (no., name, discipline, client/context, year)
-  where hovering a row previews the work.
+- **Two modes, site-wide: Notes (default) and Index.** A [Notes] [Index] switch on every page; the choice is remembered.
+  Notes is my own short paragraph (3 to 5 sentences, at most 4 to 6 links); Index is a plain list for quick scanning.
+- **Home.** Notes: a self-intro whose keywords open the discipline pages, with a rectangular hover preview; contact at the bottom.
+  Index: every project as a list (no., name, discipline, client/context, year).
+- **Discipline pages.** Notes: a paragraph tying that discipline's main works together; project names preview on hover and open the project page.
+  Index: the same list, filtered to that discipline.
 - **Portfolio / Miscellanea.** Full projects in Portfolio; photography sets and loose creative work in Miscellanea.
-- **Project page.** Fixed left column (discipline, context, skills, links, ask-the-AI button);
+- **Project page.** Fixed left column (discipline, context, skills, links);
   right side large visuals and the story: Context, Approach, Outcome.
 
 ## Look
