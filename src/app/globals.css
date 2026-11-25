@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
-/* Placeholder tokens. Final values come from the Figma Foundations page. */
+/* Colour tokens. Source of truth: Figma "Ziwen Portfolio Site" > Foundations > Colour. */
 :root {
-  --background: #f4f2ee;
-  --foreground: #1c1b1a;
-  --muted: #8a8780;
+  --background: #fafafa;
+  --foreground: #121212;
+  --hairline: #e6e6e6;
+  --accent: #d1245e;
+  --on-accent: #fafafa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
+  --color-hairline: var(--hairline);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

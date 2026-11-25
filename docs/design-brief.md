@@ -23,7 +23,11 @@ The risk is looking scattered; the site must read as "one person who takes ideas
 ## Look
 - Restraint and precision at the level of rauno.me: one text typeface, a strict spacing scale,
   carefully tuned motion. Large space for images (brand and photo work need room).
-- One bright accent colour; everything else neutral. Tuned off-white / off-black, never pure #FFF / #000.
+- Colour (decided 2026-11-25): background #FAFAFA, text #121212, hairline #E6E6E6, accent rose #D1245E,
+  text on rose #FAFAFA. No grey text and no warm/greige tints; the accent is used in large confident
+  shapes (a colour band or a big circle; which one is decided at the layout step).
+- Typography signature: drop caps (large serif initial at the start of a paragraph, body in a clean sans),
+  woven through the site, e.g. project story openings.
 - Hand-drawn accent: my own handwriting (paper → photo → SVG), used only for notes, hover
   annotations and circling key words, possibly with stroke-by-stroke animation.
   Placeholder handwriting font in Figma until then.
@@ -40,5 +44,5 @@ Figma (design + tokens) → Next.js + Tailwind → GitHub (public) → Vercel.
 
 ## Open
 - The one-sentence self-definition (also the AI twin's core answer)
-- Accent colour, typefaces
+- Typefaces (sans for body, serif for drop caps), handwriting placeholder
 - Project list and which projects go first
