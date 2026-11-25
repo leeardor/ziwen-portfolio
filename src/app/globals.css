@@ -32,6 +32,13 @@
   --text-heading-lg: 1.5rem;    /* 24 desktop */
   --text-heading-lg--line-height: 1.25;
   --text-heading-lg--letter-spacing: -0.01em;
+  /* Intro: same sizes as Heading (20 / 24) with looser 1.5 leading, for the home notes. */
+  --text-intro: 1.25rem;
+  --text-intro--line-height: 1.5;
+  --text-intro--letter-spacing: -0.01em;
+  --text-intro-lg: 1.5rem;
+  --text-intro-lg--line-height: 1.5;
+  --text-intro-lg--letter-spacing: -0.01em;
   --text-body: 1rem;            /* 16 */
   --text-body--line-height: 1.6;
   --text-small: 0.8125rem;      /* 13 */
@@ -76,6 +83,35 @@ body {
 /* Regular weight only: headings and strong text must not turn bold. */
 h1, h2, h3, h4, h5, h6, b, strong, th {
   font-weight: 400;
+}
+
+/* Focus ring via box-shadow so it follows border radius (interface guidelines). */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 3px var(--accent);
+}
+
+/* First-visit splash: shown only when the head script flags a first visit,
+   so returning visitors never see a flash of it. */
+.splash { display: none; }
+html[data-splash] .splash { display: flex; }
+html[data-splash] body { overflow: hidden; }
+
+@keyframes write-in {
+  from { clip-path: inset(-20% 100% -20% 0); }
+  to { clip-path: inset(-20% 0 -20% 0); }
+}
+@keyframes fade-out {
+  to { opacity: 0; visibility: hidden; }
+}
+.splash-word {
+  animation: write-in 1.8s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;
+}
+.splash-leave {
+  animation: fade-out 0.4s ease forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-word { animation: none; }
 }
 
 /* Numbers in lists and tables line up (docs/interface-guidelines.md). */

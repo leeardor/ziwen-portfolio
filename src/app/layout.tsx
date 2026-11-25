@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, EB_Garamond, Nanum_Pen_Script } from "next/font/google";
+import Splash from "@/components/Splash";
 import "./globals.css";
 
 // Typefaces. Source of truth: Figma > Foundations > Typeface.
@@ -34,8 +35,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${sans.variable} ${serif.variable} ${hand.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        {/* Flag a first visit before paint, so the splash never flashes for returning visitors. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(!localStorage.getItem("zw-visited")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.setAttribute("data-splash","")}catch(e){}`,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
+        <Splash />
+        {children}
+      </body>
     </html>
   );
 }
