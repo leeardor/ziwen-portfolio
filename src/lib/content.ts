@@ -3,17 +3,18 @@
 export type Discipline = {
   slug: string;
   label: string; // the highlighted word in the home intro
-  preview: string; // placeholder fill until real image crops exist
+  preview: string; // fallback colour while the image loads
+  image: string; // keyword fill and hover preview (temporary crops from the 2026 PDFs)
 };
 
 export const disciplines: Record<string, Discipline> = {
-  brand: { slug: "brand", label: "brand identities", preview: "#2E3A33" },
-  "art-direction": { slug: "art-direction", label: "campaigns", preview: "#3A2F2B" },
-  production: { slug: "production", label: "productions", preview: "#26303D" },
+  brand: { slug: "brand", label: "brand identities", preview: "#2E3A33", image: "/keywords/brand.jpg" },
+  "art-direction": { slug: "art-direction", label: "campaigns", preview: "#3A2F2B", image: "/keywords/art-direction.jpg" },
+  production: { slug: "production", label: "productions", preview: "#26303D", image: "/keywords/production.jpg" },
   "products-and-research": {
     slug: "products-and-research",
     label: "products and research",
-    preview: "#3B2A35",
+    preview: "#3B2A35", image: "/keywords/products-and-research.jpg",
   },
 };
 

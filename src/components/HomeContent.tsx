@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { capitalise, disciplines, indexLine, indexOrder, intro } from "@/lib/content";
+import { capitalise, type Discipline, disciplines, indexLine, indexOrder, intro } from "@/lib/content";
 import { useMode } from "@/lib/mode";
 
 const grid = "grid grid-cols-4 gap-x-4 md:grid-cols-12 md:gap-x-6";
+
+// Light ink wash over images so off-white text stays readable on any photo.
+const shade = "linear-gradient(rgb(18 18 18 / 0.35), rgb(18 18 18 / 0.35))";
 
 // No widows: the last two words of a paragraph or line group never split.
 const noWidow = (s: string) => s.replace(/ (\S+\s*)$/, "\u00a0$1");
@@ -18,10 +21,11 @@ export default function HomeContent() {
   const preview = useRef<HTMLDivElement>(null);
 
   // Pointer position goes straight to the DOM via a ref: no React render per frame.
-  const show = (colour: string, label: string) => {
+  const show = (d: Discipline) => {
     const el = preview.current;
     if (!el || !window.matchMedia("(hover: hover)").matches) return;
-    el.style.background = colour;
+    el.style.background = `${shade}, url(${d.image}) center / cover, ${d.preview}`;
+    const label = capitalise(d.label);
     el.textContent = label;
     el.style.opacity = "1";
   };
@@ -53,7 +57,7 @@ export default function HomeContent() {
               <li key={slug} className="border-b border-hairline">
                 <Link
                   href={`/${d.slug}`}
-                  onPointerEnter={() => show(d.preview, capitalise(d.label))}
+                  onPointerEnter={() => show(d)}
                   onPointerMove={move}
                   onPointerLeave={hide}
                   className={`${grid} py-3 transition-colors duration-150 hover:text-accent`}
@@ -93,11 +97,11 @@ export default function HomeContent() {
         {before && `${before} `}
         <Link
           href={`/${d.slug}`}
-          onPointerEnter={() => show(d.preview, capitalise(d.label))}
+          onPointerEnter={() => show(d)}
           onPointerMove={move}
           onPointerLeave={hide}
           className="px-[5px] text-on-accent"
-          style={{ background: d.preview }}
+          style={{ background: `${shade}, url(${d.image}) center / cover, ${d.preview}` }}
         >
           {d.label}
         </Link>
