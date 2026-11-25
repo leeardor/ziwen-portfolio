@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import BackLink from "@/components/BackLink";
 import Footer from "@/components/Footer";
 import { capitalise, disciplines, projects } from "@/lib/content";
 
@@ -15,14 +15,10 @@ export default async function ProjectPage({ params }: PageProps<"/[discipline]/[
   const d = disciplines[discipline];
 
   return (
-    <main className="flex min-h-svh flex-col px-4 pb-8 pt-24 md:px-10 md:pb-10 md:pt-32">
+    <main className="relative flex min-h-svh flex-col px-4 pb-8 pt-24 md:px-10 md:pb-10 md:pt-32">
+      <BackLink href={`/${d.slug}`} label={`Back to ${d.label}`} />
       <p className="text-intro md:text-intro-lg">{capitalise(p.title)}</p>
       <p className="mt-4">This project page is on the way.</p>
-      <p className="mt-4">
-        <Link href={`/${d.slug}`} className="rise-host underline underline-offset-4">
-          <span className="rise">Back to {d.label}</span>
-        </Link>
-      </p>
       <Footer />
     </main>
   );

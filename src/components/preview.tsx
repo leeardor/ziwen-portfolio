@@ -8,6 +8,7 @@ export type Keyword = {
   href: string;
   preview: string; // fallback colour while the image loads (or when there is none yet)
   image?: string;
+  wash?: number; // ink wash over the image in the chip, 0 to 1; light images need more (default 0.35)
   caption?: string; // text in the hover preview; defaults to the label
 };
 

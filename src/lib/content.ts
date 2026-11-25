@@ -25,21 +25,22 @@ export const disciplineKeyword = (d: Discipline): Keyword => ({
   label: d.label, href: `/${d.slug}`, preview: d.preview, image: d.image,
 });
 
-// Projects. A project is listed under one discipline page; images come later.
-export type Project = { slug: string; title: string; discipline: string; preview: string; image?: string };
+// Projects. A project is listed under one discipline page. Images are temporary frames
+// from the project videos and renders; the paper has none yet.
+export type Project = { slug: string; title: string; discipline: string; preview: string; image?: string; wash?: number };
 
 export const projects: Record<string, Project> = {
-  farmily: { slug: "farmily", title: "Farmily", discipline: "products-and-research", preview: "#2F3A2C" },
-  "check-in": { slug: "check-in", title: "Check-in", discipline: "products-and-research", preview: "#2C3340" },
-  "within-reach": { slug: "within-reach", title: "Within Reach", discipline: "products-and-research", preview: "#263A4A" },
-  oceanfeel: { slug: "oceanfeel", title: "OceanFeel", discipline: "products-and-research", preview: "#1F2F3D" },
-  mediatek: { slug: "mediatek", title: "MediaTek", discipline: "products-and-research", preview: "#3A3328" },
+  farmily: { slug: "farmily", title: "Farmily", discipline: "products-and-research", preview: "#2F3A2C", image: "/projects/farmily.jpg", wash: 0.6 },
+  "check-in": { slug: "check-in", title: "Check-in", discipline: "products-and-research", preview: "#2C3340", image: "/projects/check-in.jpg", wash: 0.6 },
+  "within-reach": { slug: "within-reach", title: "Within Reach", discipline: "products-and-research", preview: "#263A4A", image: "/projects/within-reach.jpg" },
+  oceanfeel: { slug: "oceanfeel", title: "OceanFeel", discipline: "products-and-research", preview: "#1F2F3D", image: "/projects/oceanfeel.jpg" },
+  mediatek: { slug: "mediatek", title: "MediaTek", discipline: "products-and-research", preview: "#3A3328", image: "/projects/mediatek.jpg" },
   "enigma-paper": { slug: "enigma-paper", title: "paper", discipline: "products-and-research", preview: "#3B2A35" },
 };
 
 const project = (slug: string): { keyword: Keyword } => {
   const p = projects[slug];
-  return { keyword: { label: p.title, href: `/${p.discipline}/${p.slug}`, preview: p.preview, image: p.image } };
+  return { keyword: { label: p.title, href: `/${p.discipline}/${p.slug}`, preview: p.preview, image: p.image, wash: p.wash } };
 };
 
 // Discipline pages, Notes mode: one paragraph like the home intro; project names are the keywords.

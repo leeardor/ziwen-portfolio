@@ -9,7 +9,7 @@ import { type Keyword, usePreview } from "./preview";
 export type Part = string | { keyword: Keyword } | { em: string } | { break: true };
 
 // Light ink wash over images so off-white text stays readable on any photo.
-const shade = "linear-gradient(rgb(18 18 18 / 0.35), rgb(18 18 18 / 0.35))";
+const shade = (a = 0.35) => `linear-gradient(rgb(18 18 18 / ${a}), rgb(18 18 18 / ${a}))`;
 
 // No widows: the last two words of a paragraph never split.
 const noWidow = (s: string) => s.replace(/ (\S+\s*)$/, "\u00a0$1");
@@ -57,7 +57,7 @@ export default function KeywordParagraph({ parts }: { parts: Part[] }) {
     // never ends on a lone word or starts with a comma.
     const before = glueBefore(prev);
     const after = typeof next === "string" ? (next.match(/^\S*/)?.[0] ?? "") : "";
-    const fill = k.image ? `${shade}, url(${k.image}) center / cover, ${k.preview}` : k.preview;
+    const fill = k.image ? `${shade(k.wash)}, url(${k.image}) center / cover, ${k.preview}` : k.preview;
     return (
       <span key={i} className="whitespace-nowrap">
         {before && `${before} `}
