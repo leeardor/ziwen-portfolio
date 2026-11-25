@@ -138,7 +138,7 @@ Figma：Ziwen Portfolio Site → 🎨 Foundations。代码：`src/app/globals.cs
 - 只做点缀，不承载必要信息。
 - 你自己的手写扫描好后，替换 Nanum。
 
-### 字号阶梯 [建议]
+### 字号阶梯 [已定 2026-11-25，锁定]
 
 **一旦确认就锁定：全站只能用这几个字号，不能随意新增。** 需要新字号时，先改这份规则，再改 Figma 和代码。
 
@@ -155,6 +155,8 @@ Figma：Ziwen Portfolio Site → 🎨 Foundations。代码：`src/app/globals.cs
 
 手机端：Display 44，Title 30，Heading 20，其余不变。
 Garamond 在正文里放大到 1.14 倍，让它看起来和 Schibsted 一样大。
+
+Figma：文字样式 `Desktop/*` 和 `Mobile/*`。代码：Tailwind 的默认字号已经删除，只能用 `text-display`、`text-title`、`text-heading`（手机），`md:text-display-lg`、`md:text-title-lg`、`md:text-heading-lg`（桌面），以及 `text-body`、`text-small`、`text-caption`。
 
 ---
 

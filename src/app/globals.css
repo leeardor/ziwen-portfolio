@@ -10,6 +10,36 @@
   --quote: #6b6b6b; /* quotes only: the one grey text on the site */
 }
 
+/* Locked type scale (docs/design-rules.md §2). Tailwind's default sizes are removed,
+   so only these six exist. Do not add sizes without updating the rules first. */
+@theme {
+  --text-*: initial;
+  --text-display: 2.75rem;      /* 44 mobile, 72 desktop via md:text-display-lg */
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.03em;
+  --text-display-lg: 4.5rem;
+  --text-display-lg--line-height: 1;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-title: 1.875rem;       /* 30 mobile */
+  --text-title--line-height: 1.1;
+  --text-title--letter-spacing: -0.02em;
+  --text-title-lg: 2.5rem;      /* 40 desktop */
+  --text-title-lg--line-height: 1.1;
+  --text-title-lg--letter-spacing: -0.02em;
+  --text-heading: 1.25rem;      /* 20 mobile */
+  --text-heading--line-height: 1.25;
+  --text-heading--letter-spacing: -0.01em;
+  --text-heading-lg: 1.5rem;    /* 24 desktop */
+  --text-heading-lg--line-height: 1.25;
+  --text-heading-lg--letter-spacing: -0.01em;
+  --text-body: 1rem;            /* 16 */
+  --text-body--line-height: 1.6;
+  --text-small: 0.8125rem;      /* 13 */
+  --text-small--line-height: 1.5;
+  --text-caption: 0.75rem;      /* 12 */
+  --text-caption--line-height: 1.4;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -27,6 +57,14 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
   font-weight: 400;
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+
+/* Text selection in rose (docs/design-rules.md §1). */
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 /* Regular weight only: headings and strong text must not turn bold. */
