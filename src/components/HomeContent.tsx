@@ -7,6 +7,9 @@ import { useMode } from "@/lib/mode";
 
 const grid = "grid grid-cols-4 gap-x-4 md:grid-cols-12 md:gap-x-6";
 
+// No widows: the last two words of a paragraph or line group never split.
+const noWidow = (s: string) => s.replace(/ (\S+\s*)$/, "\u00a0$1");
+
 const isKeyword = (p: (typeof intro)[number] | undefined) =>
   typeof p === "object" && p !== null && "discipline" in p;
 
@@ -42,7 +45,7 @@ export default function HomeContent() {
   if (mode === "index") {
     return (
       <section>
-        <p>{indexLine}</p>
+        <p>{noWidow(indexLine)}</p>
         <ul className="mt-8 border-t border-hairline">
           {indexOrder.map((slug, i) => {
             const d = disciplines[slug];
@@ -76,6 +79,8 @@ export default function HomeContent() {
             let s = part;
             if (isKeyword(intro[i - 1])) s = s.replace(/^\S*/, "");
             if (isKeyword(intro[i + 1])) s = s.replace(/\S+\s*$/, "");
+            const next = intro[i + 1];
+            if (next === undefined || (typeof next === "object" && "break" in next)) s = noWidow(s);
             return s;
           }
           if ("break" in part) return <br key={i} />;
