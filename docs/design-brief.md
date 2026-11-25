@@ -40,7 +40,8 @@ memorable)? If it is neither, cut it. Novel moments must never make the site har
 - Type (decided 2026-11-25): Schibsted Grotesk Regular for everything, including body text. No bold
   anywhere: every font is used at Regular 400. EB Garamond italic only to highlight ONE key phrase of
   1 to 3 words inside body text (e.g. "small roaster"), never a whole sentence; at most one per
-  paragraph; never in headings, the index or UI. No drop caps.
+  paragraph. Quotes: the whole quotation in EB Garamond Regular, source line in Schibsted.
+  Garamond is never used in headings, the index or UI. No drop caps.
   Accents stay few: at most one handwriting note per screen.
   Handwriting placeholder: Nanum Pen Script (Figma family name "Nanum Pen"), large sizes only, always in rose.
 - Hand-drawn accent: my own handwriting (paper → photo → SVG), used only for notes, hover

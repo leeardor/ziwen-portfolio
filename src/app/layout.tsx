@@ -9,12 +9,12 @@ const sans = Schibsted_Grotesk({
   weight: "400", // Regular only: no bold anywhere on the site.
 });
 
-// Highlights inside body text only (an italic phrase). Never headings or UI.
+// Two uses only: italic for a 1-3 word highlight in body text; regular for quotes.
 const serif = EB_Garamond({
   variable: "--font-garamond",
   subsets: ["latin"],
   weight: "400",
-  style: "italic",
+  style: ["normal", "italic"],
 });
 
 // Placeholder for my own handwriting. Large sizes only, always in the accent colour.
