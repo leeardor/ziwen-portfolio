@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
 import BackLink from "@/components/BackLink";
 import Footer from "@/components/Footer";
-import KeywordParagraph from "@/components/KeywordParagraph";
+import DisciplineContent from "@/components/DisciplineContent";
 import { capitalise, disciplineNotes, disciplines } from "@/lib/content";
-
-const grid = "grid grid-cols-4 gap-x-4 md:grid-cols-12 md:gap-x-6";
 
 export function generateStaticParams() {
   return Object.keys(disciplines).map((discipline) => ({ discipline }));
@@ -20,9 +18,7 @@ export default async function DisciplinePage({ params }: PageProps<"/[discipline
     <main className="relative flex min-h-svh flex-col px-4 pb-8 pt-24 md:px-10 md:pb-10 md:pt-32">
       <BackLink href="/" label="Back to home" />
       {notes ? (
-        <section className={grid}>
-          <KeywordParagraph parts={notes} />
-        </section>
+        <DisciplineContent label={d.label} notes={notes} />
       ) : (
         // Placeholder until this discipline gets its notes.
         <>

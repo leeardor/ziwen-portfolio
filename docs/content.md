@@ -29,6 +29,13 @@ I work in Chinese, Italian and English.
   - Key points Ziwen asked for: Check-in = manufacturability that general AI tools leave out; Within Reach = family knows right away after a fall (not the jewellery look); OceanFeel = an exhibit experience with ocean knowledge.
   - Order in the paragraph: paper, Farmily, Check-in, Within Reach, OceanFeel, MediaTek.
   - Roles (for project pages): Farmily: Research, UX/UI, Brand identity, Prototype and testing. Check-in: Research, UX/UI, Strategy. Within Reach: Research, UX/UI, Product concept. OceanFeel: Research, Experience design, Testing. MediaTek: Research, Strategy, Deck design. Paper: Co-author.
+- Products and research page, Index mode (confirmed by Ziwen 2026-11-26): columns are number, project, what I did, who with or where, year. Phone: number, project and year on line one; what and where each on their own smaller line, same ink.
+  - Paper: Perception Research; Kyushu University / Journal of Illusion; 2025–2026
+  - Farmily: AI / Strategy / Brand & UX/UI Design; NUS; 2026
+  - Check-in: AI / Strategy / UX/UI Design; NUS; 2026
+  - Within Reach: Strategy / Product Concept / UX/UI Design; NUS; Ongoing
+  - OceanFeel: Experience Design; NUS / OceanX; Ongoing
+  - MediaTek: Business Strategy; NUS / MediaTek; 2026 (no AI)
   - Chord moved to Brand identities (roles are brand, website, product UX, no research; project no longer active): An AI social agent in chat apps that replaces swiping. Roles: Brand identity, Website, Product/UX (Founding Designer). Startup, 2026.
 - Photography: no material yet; own page or Miscellanea?
 

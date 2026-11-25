@@ -27,15 +27,19 @@ export const disciplineKeyword = (d: Discipline): Keyword => ({
 
 // Projects. A project is listed under one discipline page. Images are temporary frames
 // from the project videos and renders; the paper has none yet.
-export type Project = { slug: string; title: string; discipline: string; preview: string; image?: string; wash?: number };
+// type, context and year fill the Index columns (years confirmed by Ziwen 2026-11-26).
+export type Project = {
+  slug: string; title: string; discipline: string; preview: string; image?: string; wash?: number;
+  type: string; context: string; year?: string;
+};
 
 export const projects: Record<string, Project> = {
-  farmily: { slug: "farmily", title: "Farmily", discipline: "products-and-research", preview: "#2F3A2C", image: "/projects/farmily.jpg", wash: 0.6 },
-  "check-in": { slug: "check-in", title: "Check-in", discipline: "products-and-research", preview: "#2C3340", image: "/projects/check-in.jpg", wash: 0.6 },
-  "within-reach": { slug: "within-reach", title: "Within Reach", discipline: "products-and-research", preview: "#263A4A", image: "/projects/within-reach.jpg" },
-  oceanfeel: { slug: "oceanfeel", title: "OceanFeel", discipline: "products-and-research", preview: "#1F2F3D", image: "/projects/oceanfeel.jpg" },
-  mediatek: { slug: "mediatek", title: "MediaTek", discipline: "products-and-research", preview: "#3A3328", image: "/projects/mediatek.jpg" },
-  "enigma-paper": { slug: "enigma-paper", title: "paper", discipline: "products-and-research", preview: "#3B2A35" },
+  farmily: { slug: "farmily", title: "Farmily", discipline: "products-and-research", preview: "#2F3A2C", image: "/projects/farmily.jpg", wash: 0.6, type: "AI / Strategy / Brand & UX/UI Design", context: "NUS", year: "2026" },
+  "check-in": { slug: "check-in", title: "Check-in", discipline: "products-and-research", preview: "#2C3340", image: "/projects/check-in.jpg", wash: 0.6, type: "AI / Strategy / UX/UI Design", context: "NUS", year: "2026" },
+  "within-reach": { slug: "within-reach", title: "Within Reach", discipline: "products-and-research", preview: "#263A4A", image: "/projects/within-reach.jpg", type: "Strategy / Product Concept / UX/UI Design", context: "NUS", year: "Ongoing" },
+  oceanfeel: { slug: "oceanfeel", title: "OceanFeel", discipline: "products-and-research", preview: "#1F2F3D", image: "/projects/oceanfeel.jpg", type: "Experience Design", context: "NUS / OceanX", year: "Ongoing" },
+  mediatek: { slug: "mediatek", title: "MediaTek", discipline: "products-and-research", preview: "#3A3328", image: "/projects/mediatek.jpg", type: "Business Strategy", context: "NUS / MediaTek", year: "2026" },
+  "enigma-paper": { slug: "enigma-paper", title: "paper", discipline: "products-and-research", preview: "#3B2A35", type: "Perception Research", context: "Kyushu University / Journal of Illusion", year: "2025–2026" },
 };
 
 const project = (slug: string): { keyword: Keyword } => {
