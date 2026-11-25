@@ -17,6 +17,7 @@
   --color-on-accent: var(--on-accent);
   --font-sans: var(--font-schibsted);
   --font-serif: var(--font-garamond);
+  --font-hand: var(--font-nanum);
 }
 
 body {

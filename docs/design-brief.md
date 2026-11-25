@@ -39,7 +39,7 @@ memorable)? If it is neither, cut it. Novel moments must never make the site har
   shapes (a colour band or a big circle; which one is decided at the layout step).
 - Type (decided 2026-11-25): Schibsted Grotesk (400, 500) for everything; EB Garamond (regular + italic) as
   the accent only: an italic word in a heading, pull quotes, drop caps. Use sparingly.
-  Handwriting placeholder and an optional monospace still to choose.
+  Handwriting placeholder: Nanum Pen Script (Figma family name "Nanum Pen"), large sizes only, always in rose.
 - Hand-drawn accent: my own handwriting (paper → photo → SVG), used only for notes, hover
   annotations and circling key words, possibly with stroke-by-stroke animation.
   Placeholder handwriting font in Figma until then.
@@ -56,5 +56,5 @@ Figma (design + tokens) → Next.js + Tailwind → GitHub (public) → Vercel.
 
 ## Open
 - The one-sentence self-definition (also the AI twin's core answer)
-- Handwriting placeholder font, optional monospace
+- Usage rules for type and colour
 - Project list and which projects go first
