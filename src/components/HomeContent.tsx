@@ -70,44 +70,58 @@ export default function HomeContent() {
     );
   }
 
+  const nodes = intro.map((part, i) => {
+    if (typeof part === "string") {
+      // Words touching a keyword are rendered with it (see below), so trim them here.
+      let s = part;
+      if (isKeyword(intro[i - 1])) s = s.replace(/^\S*/, "");
+      if (isKeyword(intro[i + 1])) s = s.replace(/\S+\s*$/, "");
+      const next = intro[i + 1];
+      if (next === undefined || (typeof next === "object" && "break" in next)) s = noWidow(s);
+      return s;
+    }
+    if ("break" in part) return null; // group boundary, see groups below
+    const d = disciplines[part.discipline];
+    const prev = intro[i - 1];
+    const next = intro[i + 1];
+    // Glue the word before and the punctuation after to the keyword, so a line
+    // never ends on a lone word or starts with a comma.
+    const before = typeof prev === "string" ? (prev.match(/(\S+)\s*$/)?.[1] ?? "") : "";
+    const after = typeof next === "string" ? (next.match(/^\S*/)?.[0] ?? "") : "";
+    return (
+      <span key={i} className="whitespace-nowrap">
+        {before && `${before} `}
+        <Link
+          href={`/${d.slug}`}
+          onPointerEnter={() => show(d.preview, capitalise(d.label))}
+          onPointerMove={move}
+          onPointerLeave={hide}
+          className="px-[5px] text-on-accent"
+          style={{ background: d.preview }}
+        >
+          {d.label}
+        </Link>
+        {after}
+      </span>
+    );
+  });
+
+  // Split at the line breaks into sentence groups.
+  const groups: React.ReactNode[][] = [[]];
+  intro.forEach((part, i) => {
+    if (typeof part === "object" && "break" in part) groups.push([]);
+    else groups[groups.length - 1].push(nodes[i]);
+  });
+
   return (
     <section className={grid}>
+      {/* Each sentence group is its own balanced block, so lines in a group stay close in length. */}
       <p className="col-span-4 text-intro md:col-span-8 md:text-intro-lg">
-        {intro.map((part, i) => {
-          if (typeof part === "string") {
-            // Words touching a keyword are rendered with it (see below), so trim them here.
-            let s = part;
-            if (isKeyword(intro[i - 1])) s = s.replace(/^\S*/, "");
-            if (isKeyword(intro[i + 1])) s = s.replace(/\S+\s*$/, "");
-            const next = intro[i + 1];
-            if (next === undefined || (typeof next === "object" && "break" in next)) s = noWidow(s);
-            return s;
-          }
-          if ("break" in part) return <br key={i} />;
-          const d = disciplines[part.discipline];
-          const prev = intro[i - 1];
-          const next = intro[i + 1];
-          // Glue the word before and the punctuation after to the keyword, so a line
-          // never ends on a lone word or starts with a comma.
-          const before = typeof prev === "string" ? (prev.match(/(\S+)\s*$/)?.[1] ?? "") : "";
-          const after = typeof next === "string" ? (next.match(/^\S*/)?.[0] ?? "") : "";
-          return (
-            <span key={i} className="whitespace-nowrap">
-              {before && `${before} `}
-              <Link
-                href={`/${d.slug}`}
-                onPointerEnter={() => show(d.preview, capitalise(d.label))}
-                onPointerMove={move}
-                onPointerLeave={hide}
-                className="px-[5px] text-on-accent"
-                style={{ background: d.preview }}
-              >
-                {d.label}
-              </Link>
-              {after}
-            </span>
-          );
-        })}
+        {groups.map((g, gi) => (
+          <span key={gi} className="block [text-wrap:balance]">
+            {g}
+          </span>
+        ))}
       </p>
       {previewBox}
     </section>
