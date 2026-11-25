@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { SPLASH_STROKES, SPLASH_TOTAL_MS, SPLASH_VIEWBOX } from "./splash-strokes";
 
-// First visit only: "Ziwen's archive" writes itself in, then the site appears.
+// First visit only: "Ziwen's archive" is written stroke by stroke, then the site appears.
 // The head script in layout.tsx decides whether to show it (data-splash on <html>).
-const WRITE_MS = 2600;
+const HOLD_MS = 500;
 const FADE_MS = 400;
 
 export default function Splash() {
@@ -24,7 +25,7 @@ export default function Splash() {
       ref.current?.classList.add("splash-leave");
       window.setTimeout(() => html.removeAttribute("data-splash"), FADE_MS);
     };
-    const timer = window.setTimeout(leave, WRITE_MS);
+    const timer = window.setTimeout(leave, SPLASH_TOTAL_MS + HOLD_MS);
     window.addEventListener("pointerdown", leave);
     window.addEventListener("keydown", leave);
     return () => {
@@ -40,9 +41,17 @@ export default function Splash() {
       aria-hidden
       className="splash fixed inset-0 z-50 items-center justify-center bg-background"
     >
-      <span className="splash-word font-hand text-display text-accent md:text-display-lg">
-        Ziwen&rsquo;s archive
-      </span>
+      <svg viewBox={SPLASH_VIEWBOX} className="w-[80vw] max-w-[560px] text-accent">
+        {SPLASH_STROKES.map((s, i) => (
+          <path
+            key={i}
+            d={s.d}
+            pathLength={1}
+            className="splash-stroke"
+            style={{ animationDelay: `${s.delay}ms`, animationDuration: `${s.dur}ms` }}
+          />
+        ))}
+      </svg>
     </div>
   );
 }

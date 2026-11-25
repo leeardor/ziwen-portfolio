@@ -21,7 +21,9 @@ export const disciplines: Record<string, Discipline> = {
 export type IntroPart = string | { discipline: keyof typeof disciplines } | { break: true };
 
 export const intro: IntroPart[] = [
-  "Ziwen Li, multidisciplinary designer between Milan and Singapore. I design ",
+  "Ziwen Li, multidisciplinary designer between Milan and Singapore.",
+  { break: true }, // each sentence group starts on its own line
+  "I design ",
   { discipline: "brand" },
   ", art-direct ",
   { discipline: "art-direction" },
@@ -30,7 +32,7 @@ export const intro: IntroPart[] = [
   " for fashion and hospitality brands. At NUS I work on ",
   { discipline: "products-and-research" },
   ".",
-  { break: true }, // the languages sentence always starts on its own line
+  { break: true },
   "I work in Chinese, Italian and English.",
 ];
 
