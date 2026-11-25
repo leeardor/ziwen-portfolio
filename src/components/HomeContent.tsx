@@ -30,6 +30,15 @@ export default function HomeContent() {
     if (preview.current) preview.current.style.opacity = "0";
   };
 
+  // One preview box shared by both modes.
+  const previewBox = (
+    <div
+      ref={preview}
+      aria-hidden
+      className="pointer-events-none fixed left-0 top-0 z-40 flex h-[160px] w-[240px] items-end p-2 text-caption text-on-accent opacity-0 transition-opacity duration-150"
+    />
+  );
+
   if (mode === "index") {
     return (
       <section>
@@ -41,6 +50,9 @@ export default function HomeContent() {
               <li key={slug} className="border-b border-hairline">
                 <Link
                   href={`/${d.slug}`}
+                  onPointerEnter={() => show(d.preview, capitalise(d.label))}
+                  onPointerMove={move}
+                  onPointerLeave={hide}
                   className={`${grid} py-3 transition-colors duration-150 hover:text-accent`}
                 >
                   <span className="tabular col-span-1">{String(i + 1).padStart(2, "0")}</span>
@@ -50,13 +62,14 @@ export default function HomeContent() {
             );
           })}
         </ul>
+        {previewBox}
       </section>
     );
   }
 
   return (
     <section className={grid}>
-      <p className="col-span-4 text-intro [text-wrap:pretty] md:col-span-8 md:text-intro-lg">
+      <p className="col-span-4 text-intro md:col-span-8 md:text-intro-lg">
         {intro.map((part, i) => {
           if (typeof part === "string") {
             // Words touching a keyword are rendered with it (see below), so trim them here.
@@ -91,11 +104,7 @@ export default function HomeContent() {
           );
         })}
       </p>
-      <div
-        ref={preview}
-        aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-40 flex h-[160px] w-[240px] items-end p-2 text-caption text-on-accent opacity-0 transition-opacity duration-150"
-      />
+      {previewBox}
     </section>
   );
 }
