@@ -6,15 +6,15 @@ import "./globals.css";
 const sans = Schibsted_Grotesk({
   variable: "--font-schibsted",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: "400", // Regular only: no bold anywhere on the site.
 });
 
-// Accent only: italic words, pull quotes, drop caps.
+// Highlights inside body text only (an italic phrase). Never headings or UI.
 const serif = EB_Garamond({
   variable: "--font-garamond",
   subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
+  weight: "400",
+  style: "italic",
 });
 
 // Placeholder for my own handwriting. Large sizes only, always in the accent colour.
