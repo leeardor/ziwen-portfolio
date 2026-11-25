@@ -37,7 +37,9 @@ memorable)? If it is neither, cut it. Novel moments must never make the site har
 - Colour (decided 2026-11-25): background #FAFAFA, text #121212, hairline #E6E6E6, accent rose #D1245E,
   text on rose #FAFAFA. No grey text and no warm/greige tints; the accent is used in large confident
   shapes (a colour band or a big circle; which one is decided at the layout step).
-- Drop caps seen in a reference screenshot: optional, decided at the font step.
+- Type (decided 2026-11-25): Schibsted Grotesk (400, 500) for everything; EB Garamond (regular + italic) as
+  the accent only: an italic word in a heading, pull quotes, drop caps. Use sparingly.
+  Handwriting placeholder and an optional monospace still to choose.
 - Hand-drawn accent: my own handwriting (paper → photo → SVG), used only for notes, hover
   annotations and circling key words, possibly with stroke-by-stroke animation.
   Placeholder handwriting font in Figma until then.
@@ -54,5 +56,5 @@ Figma (design + tokens) → Next.js + Tailwind → GitHub (public) → Vercel.
 
 ## Open
 - The one-sentence self-definition (also the AI twin's core answer)
-- Typefaces, handwriting placeholder
+- Handwriting placeholder font, optional monospace
 - Project list and which projects go first
