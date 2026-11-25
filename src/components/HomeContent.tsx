@@ -64,10 +64,10 @@ export default function HomeContent() {
                   onPointerEnter={() => show(d)}
                   onPointerMove={move}
                   onPointerLeave={hide}
-                  className={`${grid} py-3 transition-colors duration-150 hover:text-accent`}
+                  className={`${grid} rise-host py-3`}
                 >
-                  <span className="tabular col-span-1">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="col-span-3 md:col-span-11">{capitalise(d.label)}</span>
+                  <span className="rise tabular col-span-1 justify-self-start">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="col-span-3 md:col-span-11"><span className="rise">{capitalise(d.label)}</span></span>
                 </Link>
               </li>
             );

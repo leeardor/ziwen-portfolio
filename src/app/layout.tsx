@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, EB_Garamond, Nanum_Pen_Script } from "next/font/google";
+import RiseDirection from "@/components/RiseDirection";
 import Splash from "@/components/Splash";
 import "./globals.css";
 
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-full flex flex-col">
         <Splash />
+        <RiseDirection />
         {children}
       </body>
     </html>

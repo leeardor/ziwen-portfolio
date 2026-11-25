@@ -18,9 +18,7 @@ export default async function DisciplinePage({ params }: PageProps<"/[discipline
       <p className="text-intro md:text-intro-lg">{capitalise(d.label)}</p>
       <p className="mt-4">Notes and projects for this page are on the way.</p>
       <p className="mt-4">
-        <Link href="/" className="underline underline-offset-4 transition-colors duration-150 hover:text-accent">
-          Back to home
-        </Link>
+        <Link href="/" className="rise-host underline underline-offset-4"><span className="rise">Back to home</span></Link>
       </p>
       <Footer />
     </main>
