@@ -3,8 +3,9 @@
 Working copy for the site. Facts only from my CV and portfolios.
 
 ## Home intro (Notes mode) — chosen 2026-11-25, Rauno-style
-Ziwen Li, multidisciplinary designer between Milan and Singapore. (own line)
-I design [brand identities], art-direct [campaigns] and run [productions] for fashion and hospitality brands. At NUS I work on [products and research].
+Ziwen Li, multidisciplinary design engineer between Milan and Singapore. (own line)
+At NUS I work on [products and research]. (own line: engineering first)
+I design [brand identities], art-direct [campaigns] and run [productions] for fashion and hospitality brands. (own line)
 I work in Chinese, Italian and English. (always on its own line)
 
 [ ] = keyword link to a discipline page (image fill, hover preview).

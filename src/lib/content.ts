@@ -22,23 +22,25 @@ export const disciplines: Record<string, Discipline> = {
 export type IntroPart = string | { discipline: keyof typeof disciplines } | { break: true };
 
 export const intro: IntroPart[] = [
-  "Ziwen Li, multidisciplinary designer between Milan and Singapore.",
+  "Ziwen Li, multidisciplinary design engineer between Milan and Singapore.",
   { break: true }, // each sentence group starts on its own line
+  "At NUS I work on ",
+  { discipline: "products-and-research" },
+  ".",
+  { break: true },
   "I design ",
   { discipline: "brand" },
   ", art-direct ",
   { discipline: "art-direction" },
   " and run ",
   { discipline: "production" },
-  " for fashion and hospitality brands. At NUS I work on ",
-  { discipline: "products-and-research" },
-  ".",
+  " for fashion and hospitality brands.",
   { break: true },
   "I work in Chinese, Italian and English.",
 ];
 
 // Home intro, Index mode: one plain line, then the list below.
-export const indexLine = "Ziwen Li, multidisciplinary designer between Milan and Singapore.";
+export const indexLine = "Ziwen Li, multidisciplinary design engineer between Milan and Singapore.";
 
 // Order in the Index list (differs from the intro on purpose).
 export const indexOrder: (keyof typeof disciplines)[] = [
