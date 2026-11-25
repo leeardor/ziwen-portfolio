@@ -104,11 +104,11 @@ export default function HomeContent() {
           onPointerEnter={() => show(d)}
           onPointerMove={move}
           onPointerLeave={hide}
-          className="group px-[5px] [background:var(--chip)]"
+          className="kw rise-host px-[5px] [background:var(--chip)]"
           style={{ "--chip": `${shade}, url(${d.image}) center / cover, ${d.preview}` } as React.CSSProperties}
         >
-          {/* On hover only the text turns rose, filling from the bottom up. */}
-          <span className="keyword-text">{d.label}</span>
+          {/* On hover rose rises through the text from the bottom (image stays). */}
+          <span className="rise">{d.label}</span>
         </Link>
         {after}
       </span>

@@ -16,9 +16,9 @@ export default function Footer() {
             <a
               href={link.href}
               {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="transition-colors duration-150 hover:text-accent"
+              className="rise-host"
             >
-              {link.label}
+              <span className="rise">{link.label}</span>
             </a>
           </li>
         ))}
@@ -28,9 +28,9 @@ export default function Footer() {
         type="button"
         onClick={() => setMode(next)}
         aria-label={`Switch to ${next} view`}
-        className="translate-y-[3px] cursor-pointer select-none rounded-full border border-foreground px-3.5 py-0.5 transition-colors duration-150 hover:border-accent hover:text-accent"
+        className="pill rise-host translate-y-[3px] cursor-pointer select-none rounded-full border border-foreground px-3.5 py-0.5"
       >
-        {next === "index" ? "Index" : "Notes"}
+        <span className="rise">{next === "index" ? "Index" : "Notes"}</span>
       </button>
     </footer>
   );
