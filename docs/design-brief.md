@@ -7,6 +7,17 @@ A portfolio to show past projects. Target roles: design engineer, and brand crea
 The work spans brand & graphic design, photography, creative, production, and strategy.
 The risk is looking scattered; the site must read as "one person who takes ideas all the way to the finished thing".
 
+## Guiding rule: 90% familiar, 10% novel
+Every page should feel instantly usable: conventions visitors already know (name at the top, a project
+list, a project page that reads top to bottom, obvious navigation). The surprise is concentrated in a few
+deliberate moments, and each one should be crafted rather than scattered:
+- the AI twin entry
+- hand-drawn annotations in my own handwriting
+- hover previews on the project list
+- the grid / list view switch
+When adding anything new, ask: is this part of the 90% (should feel invisible) or the 10% (should feel
+memorable)? If it is neither, cut it. Novel moments must never make the site harder to use.
+
 ## Structure
 - **Entry: AI twin.** A chat box answering in my voice, with preset questions
   (who I am, how I define myself, why I work across so many fields, which fields).
@@ -26,8 +37,7 @@ The risk is looking scattered; the site must read as "one person who takes ideas
 - Colour (decided 2026-11-25): background #FAFAFA, text #121212, hairline #E6E6E6, accent rose #D1245E,
   text on rose #FAFAFA. No grey text and no warm/greige tints; the accent is used in large confident
   shapes (a colour band or a big circle; which one is decided at the layout step).
-- Typography signature: drop caps (large serif initial at the start of a paragraph, body in a clean sans),
-  woven through the site, e.g. project story openings.
+- Drop caps seen in a reference screenshot: optional, decided at the font step.
 - Hand-drawn accent: my own handwriting (paper → photo → SVG), used only for notes, hover
   annotations and circling key words, possibly with stroke-by-stroke animation.
   Placeholder handwriting font in Figma until then.
@@ -44,5 +54,5 @@ Figma (design + tokens) → Next.js + Tailwind → GitHub (public) → Vercel.
 
 ## Open
 - The one-sentence self-definition (also the AI twin's core answer)
-- Typefaces (sans for body, serif for drop caps), handwriting placeholder
+- Typefaces, handwriting placeholder
 - Project list and which projects go first
