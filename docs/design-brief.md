@@ -8,6 +8,9 @@ The work spans brand & graphic design, photography, creative, production, and st
 The risk is looking scattered; the site must read as "one person who takes ideas all the way to the finished thing".
 
 ## Guiding rule: 90% familiar, 10% novel
+Full design philosophy (frequency vs novelty, first-visit-only moments, 60/30/10 colour, novelty tax):
+see docs/design-rules.md section 0, distilled from Rauno Freiberg's "Novelty" essay.
+
 Every page should feel instantly usable: conventions visitors already know (name at the top, a project
 list, a project page that reads top to bottom, obvious navigation). The surprise is concentrated in a few
 deliberate moments, and each one should be crafted rather than scattered:
