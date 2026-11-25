@@ -22,7 +22,8 @@ When adding anything new, ask: is this part of the 90% (should feel invisible) o
 memorable)? If it is neither, cut it. Novel moments must never make the site harder to use.
 
 ## Structure
-- **Entry: AI twin.** A chat box answering in my voice, with preset questions
+- **First visit: handwritten splash** "Ziwen's archive", then straight into the home page.
+- **AI twin (phase 2): an opt-in button**, not the entry. A chat box answering in my voice, with preset questions
   (who I am, how I define myself, why I work across so many fields, which fields).
   An "Enter the site" button skips it. Built in phase 2, on the Claude API, with a spend cap,
   per-visitor rate limit, and the key kept server-side.
