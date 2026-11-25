@@ -122,6 +122,28 @@ html[data-splash] body { overflow: hidden; }
   .splash-stroke { animation: none; stroke-dashoffset: 0; }
 }
 
+/* Keyword text: off-white, rose rises from the bottom on hover (200ms). */
+.keyword-text {
+  color: transparent;
+  background: linear-gradient(to top, var(--accent) 50%, var(--on-accent) 50%) 0 0 / 100% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-position 200ms ease-out;
+}
+@media (hover: hover) {
+  .group:hover .keyword-text { background-position: 0 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .keyword-text { transition: none; }
+}
+
+/* Cursor: a small rose dot everywhere, on links too (mouse and trackpad only). */
+@media (hover: hover) and (pointer: fine) {
+  html, html * {
+    cursor: url("/cursor.svg") 8 8, auto !important;
+  }
+}
+
 /* Numbers in lists and tables line up (docs/interface-guidelines.md). */
 .tabular {
   font-variant-numeric: tabular-nums;

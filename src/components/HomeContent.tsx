@@ -31,7 +31,11 @@ export default function HomeContent() {
   };
   const move = (e: React.PointerEvent) => {
     const el = preview.current;
-    if (el) el.style.transform = `translate(${e.clientX + 16}px, ${e.clientY + 16}px)`;
+    if (!el) return;
+    // Flip to the other side of the pointer when the box would leave the screen.
+    const x = e.clientX + 16 + el.offsetWidth > window.innerWidth ? e.clientX - 16 - el.offsetWidth : e.clientX + 16;
+    const y = e.clientY + 16 + el.offsetHeight > window.innerHeight ? e.clientY - 16 - el.offsetHeight : e.clientY + 16;
+    el.style.transform = `translate(${x}px, ${y}px)`;
   };
   const hide = () => {
     if (preview.current) preview.current.style.opacity = "0";
@@ -42,7 +46,7 @@ export default function HomeContent() {
     <div
       ref={preview}
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-40 flex h-[160px] w-[240px] items-end p-2 text-caption text-on-accent opacity-0 transition-opacity duration-150"
+      className="pointer-events-none fixed left-0 top-0 z-40 flex h-[240px] w-[360px] items-end p-2 text-caption text-on-accent opacity-0 transition-opacity duration-150"
     />
   );
 
@@ -100,10 +104,11 @@ export default function HomeContent() {
           onPointerEnter={() => show(d)}
           onPointerMove={move}
           onPointerLeave={hide}
-          className="px-[5px] text-on-accent"
-          style={{ background: `${shade}, url(${d.image}) center / cover, ${d.preview}` }}
+          className="group px-[5px] [background:var(--chip)]"
+          style={{ "--chip": `${shade}, url(${d.image}) center / cover, ${d.preview}` } as React.CSSProperties}
         >
-          {d.label}
+          {/* On hover only the text turns rose, filling from the bottom up. */}
+          <span className="keyword-text">{d.label}</span>
         </Link>
         {after}
       </span>
