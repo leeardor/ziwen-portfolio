@@ -87,6 +87,8 @@ export default function HomeContent() {
       let s = part;
       if (isKeyword(intro[i - 1])) s = s.replace(/^\S*/, "");
       if (isKeyword(intro[i + 1])) s = s.replace(/\S+\s*$/, "");
+      // One- and two-letter words ("I", "At", "on") stay with the next word, never alone at a line end.
+      s = s.replace(/(^|\s)(\S{1,2}) /g, "$1$2 ");
       const next = intro[i + 1];
       if (next === undefined || (typeof next === "object" && "break" in next)) s = noWidow(s);
       return s;
@@ -127,10 +129,11 @@ export default function HomeContent() {
 
   return (
     <section className={grid}>
-      {/* Each sentence group is its own balanced block, so lines in a group stay close in length. */}
-      <p className="col-span-4 text-intro md:col-span-8 md:text-intro-lg">
+      {/* One continuous paragraph: sentences run on, no forced line breaks. */}
+      <p className="col-span-4 text-intro [text-wrap:balance] md:col-span-8 md:text-intro-lg">
         {groups.map((g, gi) => (
-          <span key={gi} className="block [text-wrap:balance]">
+          <span key={gi}>
+            {gi > 0 && " "}
             {g}
           </span>
         ))}
