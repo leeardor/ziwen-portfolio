@@ -24,8 +24,7 @@ export default function HomeContent() {
   const show = (d: Discipline) => {
     const el = preview.current;
     if (!el || !window.matchMedia("(hover: hover)").matches) return;
-    // No grey wash on the preview: only a soft shadow at the bottom behind the caption.
-    el.style.background = `linear-gradient(to top, rgb(18 18 18 / 0.45), transparent 35%), url(${d.image}) center / cover, ${d.preview}`;
+    el.style.background = `${shade}, url(${d.image}) center / cover, ${d.preview}`;
     const label = capitalise(d.label);
     el.textContent = label;
     el.style.opacity = "1";
@@ -36,10 +35,7 @@ export default function HomeContent() {
     // Flip to the other side of the pointer when the box would leave the screen.
     const x = e.clientX + 16 + el.offsetWidth > window.innerWidth ? e.clientX - 16 - el.offsetWidth : e.clientX + 16;
     const y = e.clientY + 16 + el.offsetHeight > window.innerHeight ? e.clientY - 16 - el.offsetHeight : e.clientY + 16;
-    // Never past either edge, even in a narrow window.
-    const cx = Math.min(Math.max(8, x), window.innerWidth - el.offsetWidth - 8);
-    const cy = Math.min(Math.max(8, y), window.innerHeight - el.offsetHeight - 8);
-    el.style.transform = `translate(${cx}px, ${cy}px)`;
+    el.style.transform = `translate(${x}px, ${y}px)`;
   };
   const hide = () => {
     if (preview.current) preview.current.style.opacity = "0";
