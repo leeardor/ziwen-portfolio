@@ -95,7 +95,7 @@ Figma：Ziwen Portfolio Site → 🎨 Foundations。代码：`src/app/globals.cs
 | 按钮（如 Index / Notes 切换） | 描边胶囊：1px Ink 描边、全圆角、左右 14 上下 2、Body 16；hover 时文字和描边都变玫瑰红，150ms [已定 2026-11-25] |
 | 手写批注 | 一律玫瑰红 |
 
-- **Notes 里的关键词和项目名不用下划线** [已定 2026-11-25]：词后面垫一小块作品图片（裁切），文字 `#FAFAFA`，Regular；图上压一层深色保证文字清楚。hover 弹出长方形预览（150ms 淡入），不变玫瑰红。手机上没有 hover，图本身就在词后面，点击直接进入。一段最多 4 到 6 个。
+- **Notes 里的关键词和项目名不用下划线** [已定 2026-11-25]：词后面垫一小块作品图片（裁切），文字 `#FAFAFA`，Regular；图上压一层深色保证文字清楚。hover 弹出长方形预览（150ms 淡入），不变玫瑰红。手机上没有 hover，图本身就在词后面，点击直接进入。一段最多 4 到 6 个。关键词整个词组不拆行（whitespace: nowrap），放不下就整体换到下一行。
 - 首页顶部的大色块：待版式那一步决定要不要。
 - 除了上面这些，其他地方不用玫瑰红。
 - hover 和选中是高频动作，所以只变颜色，不加动画花样（见 0.2）。
@@ -171,7 +171,7 @@ Figma：文字样式 `Desktop/*` 和 `Mobile/*`。代码：Tailwind 的默认字
 - 页面左右留白：桌面 40，平板 24，手机 16。
 - **[已定 2026-11-25]** 桌面 12 栏网格，栏间距 24，左右留白 40（1440 宽时每栏约 91px）；手机 4 栏，栏间距 16。所有元素的起点和宽度都对齐栏。
 - 首页：介绍占第 1 到 8 栏，离顶部 128（试过 40 太贴顶、96 和边距差得不够明显）；底部离底边 40：左下角是竖排、左对齐的联系方式（Email，空一行，Instagram、LinkedIn），Body 16，无下划线；右下角是 Index 描边胶囊按钮，右对齐第 12 栏；按钮里的文字和 LinkedIn 同一条基线（横向对齐看文字基线，不看外框），所以胶囊下沿比底部留白多出 3px。在 Index 页面，同一个按钮写 Notes。介绍字号 24，行距 1.5（36px）。
-- 首页 Index 模式（桌面）[草稿 2026-11-25]：离顶部 128 一行 “Ziwen Li, multidisciplinary designer”（Body 16，和列表同样大小；Index 是朴素模式，所有字一样大），下面 32 是首页介绍里那几个高亮关键词组成的列表，大小和项目列表一样（每行 50 高、Body 16），但没有表头，也没有项目数：只有编号和关键词，上下都是 Hairline。顺序：Products and research、Brand identities、Campaigns、Productions。手机版同样排法：离顶部 96，关键词从第 2 栏开始，底部和手机首页一样。点击进入领域页。底部和首页一样，按钮写 Notes。
+- 首页 Index 模式（桌面）[草稿 2026-11-25]：离顶部 128 一行 “Ziwen Li, multidisciplinary designer between Milan and Singapore.”（Body 16，和列表同样大小；Index 是朴素模式，所有字一样大），下面 32 是首页介绍里那几个高亮关键词组成的列表，大小和项目列表一样（每行 50 高、Body 16），但没有表头，也没有项目数：只有编号和关键词，上下都是 Hairline。顺序：Products and research、Brand identities、Campaigns、Productions。手机版同样排法：离顶部 96，关键词从第 2 栏开始，底部和手机首页一样。点击进入领域页。底部和首页一样，按钮写 Notes。
 - 领域页 Index 模式：项目列表（No.、Project 第 2 栏、Discipline 第 7 栏、Context 第 10 栏、Year 右对齐第 12 栏），表头 Small 13 + Ink 线，每行 50 高、Body 16，Hairline 分隔；页面比一屏长时，底部跟在列表后 128。Figma 里的 “All projects / Index” 是这个模板。
 - 首页手机（390 × 844）：4 栏，左右留白 16；介绍字号 20（Mobile/Heading），行距 1.5（30px），离顶部 96；底部留白 32（避开手机底部的横条）；联系方式和 Index 的排法和桌面一样，Index 文字和 LinkedIn 同一条基线。手机没有 hover，关键词点击直接进入领域页。
 - 内容最大宽度 1440，普通正文段落最大宽度约 640（每行 60 到 75 个字符）；首页介绍例外，占 8 栏。

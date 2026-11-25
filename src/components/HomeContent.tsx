@@ -65,7 +65,7 @@ export default function HomeContent() {
               onPointerEnter={() => show(d.preview, capitalise(d.label))}
               onPointerMove={move}
               onPointerLeave={hide}
-              className="px-[5px] text-on-accent [box-decoration-break:clone] [-webkit-box-decoration-break:clone]"
+              className="whitespace-nowrap px-[5px] text-on-accent"
               style={{ background: d.preview }}
             >
               {d.label}

@@ -35,7 +35,7 @@ export const intro: IntroPart[] = [
 ];
 
 // Home intro, Index mode: one plain line, then the list below.
-export const indexLine = "Ziwen Li, multidisciplinary designer";
+export const indexLine = "Ziwen Li, multidisciplinary designer between Milan and Singapore.";
 
 // Order in the Index list (differs from the intro on purpose).
 export const indexOrder: (keyof typeof disciplines)[] = [
