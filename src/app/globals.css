@@ -56,7 +56,7 @@
   --color-quote: var(--quote);
   --font-sans: var(--font-schibsted);
   --font-serif: var(--font-garamond);
-  --font-hand: var(--font-nanum);
+  --font-hand: var(--font-reenie);
 }
 
 html {
@@ -144,6 +144,16 @@ html[data-splash] body { overflow: hidden; }
 }
 @media (prefers-reduced-motion: reduce) {
   .rise, .pill, .back { transition: none; }
+}
+
+/* Margin notes on project pages: the arrow draws itself, then each line is written out
+   left to right. Timings are set inline by MarginNote; plays once when scrolled into view. */
+.note-arrow path { stroke-dasharray: 1; stroke-dashoffset: 1; transition-property: stroke-dashoffset; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+.note-on .note-arrow path { stroke-dashoffset: 0; }
+.note-line { clip-path: inset(-0.3em 100% -0.3em -0.3em); transition-property: clip-path; transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95); }
+.note-on .note-line { clip-path: inset(-0.3em -0.3em -0.3em -0.3em); }
+@media (prefers-reduced-motion: reduce) {
+  .note-arrow path, .note-line { transition: none !important; }
 }
 
 /* Cursor: a small rose dot everywhere, on links too (mouse and trackpad only). */

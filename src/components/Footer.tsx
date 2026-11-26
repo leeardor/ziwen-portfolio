@@ -2,9 +2,11 @@
 
 import { contact } from "@/lib/content";
 import { setMode, useMode } from "@/lib/mode";
+import ToTop from "./ToTop";
 
 // Bottom of every page: stacked contacts on the left, the Notes / Index pill on the right.
-export default function Footer() {
+// Project pages have no Notes / Index; there the corner holds a Top pill that appears on scroll.
+export default function Footer({ toTop = false }: { toTop?: boolean }) {
   const mode = useMode();
   const next = mode === "notes" ? "index" : "notes";
 
@@ -23,15 +25,21 @@ export default function Footer() {
           </li>
         ))}
       </ul>
-      {/* Pill sits 3px low so its text shares a baseline with "LinkedIn". */}
-      <button
-        type="button"
-        onClick={() => setMode(next)}
-        aria-label={`Switch to ${next} view`}
-        className="pill rise-host translate-y-[3px] cursor-pointer select-none rounded-full border border-foreground px-3.5 py-0.5"
-      >
-        <span className="rise">{next === "index" ? "Index" : "Notes"}</span>
-      </button>
+      {toTop ? (
+        <ToTop />
+      ) : (
+        <>
+          {/* Pill sits 3px low so its text shares a baseline with "LinkedIn". */}
+          <button
+            type="button"
+            onClick={() => setMode(next)}
+            aria-label={`Switch to ${next} view`}
+            className="pill rise-host translate-y-[3px] cursor-pointer select-none rounded-full border border-foreground px-3.5 py-0.5"
+          >
+            <span className="rise">{next === "index" ? "Index" : "Notes"}</span>
+          </button>
+        </>
+      )}
     </footer>
   );
 }

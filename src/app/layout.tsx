@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Schibsted_Grotesk, EB_Garamond, Nanum_Pen_Script } from "next/font/google";
+import { Schibsted_Grotesk, EB_Garamond, Reenie_Beanie } from "next/font/google";
 import RiseDirection from "@/components/RiseDirection";
 import Splash from "@/components/Splash";
 import "./globals.css";
@@ -19,9 +19,9 @@ const serif = EB_Garamond({
   style: ["normal", "italic"],
 });
 
-// Placeholder for my own handwriting. Large sizes only, always in the accent colour.
-const hand = Nanum_Pen_Script({
-  variable: "--font-nanum",
+// Placeholder for my own handwriting: margin notes on project pages, always in the accent colour.
+const hand = Reenie_Beanie({
+  variable: "--font-reenie",
   subsets: ["latin"],
   weight: "400",
 });
