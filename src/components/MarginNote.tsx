@@ -50,8 +50,8 @@ export default function MarginNote({ note, children }: { note?: Note; children: 
   const perLine = 360; // ms to write one line
 
   return (
-    <figure ref={ref} className={`lg:grid lg:grid-cols-8 lg:gap-x-6 ${on ? "note-on" : ""}`}>
-      <div className="relative lg:col-span-6">
+    <figure ref={ref} className={`lg:grid lg:grid-cols-9 lg:gap-x-6 ${on ? "note-on" : ""}`}>
+      <div className="relative lg:col-span-7">
         {children}
         {note?.circle && (
           <svg

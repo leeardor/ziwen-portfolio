@@ -15,7 +15,7 @@ export function generateStaticParams() {
 
 const grid = "grid grid-cols-4 gap-x-4 md:grid-cols-12 md:gap-x-6";
 
-// One image or video on the first 6 of the right column's 8 columns (about 668px wide at a
+// One image or video on the first 7 of the right column's 9 columns (about 783px wide at a
 // 1440 window); the last 2 are the margin where Ziwen's handwritten note sits, pointing back
 // at it, sometimes with a hand-drawn loop on the image. Phone: full width, note underneath. Videos play muted on a loop, like a moving image.
 function Shot({ f, priority }: { f: Figure | Video; priority?: boolean }) {
@@ -39,7 +39,7 @@ function Shot({ f, priority }: { f: Figure | Video; priority?: boolean }) {
           width={1920}
           height={1080}
           priority={priority}
-          sizes="(min-width: 1024px) 50vw, (min-width: 768px) 66vw, 100vw"
+          sizes="(min-width: 1024px) 55vw, (min-width: 768px) 75vw, 100vw"
           className="h-auto w-full"
         />
       )}
@@ -50,8 +50,8 @@ function Shot({ f, priority }: { f: Figure | Video; priority?: boolean }) {
 // A text block in the story: the same 6 columns as the images, so edges line up.
 function Text({ text }: { text: string }) {
   return (
-    <div className="lg:grid lg:grid-cols-8 lg:gap-x-6">
-      <div className="lg:col-span-6">
+    <div className="lg:grid lg:grid-cols-9 lg:gap-x-6">
+      <div className="lg:col-span-7">
         <Copy text={text} />
       </div>
     </div>
@@ -116,10 +116,16 @@ export default async function ProjectPage({
       </p>
       {page ? (
         <div className={`${grid} mt-8 border-t border-hairline pt-8`}>
-          <aside className="col-span-4 flex flex-col gap-6 md:sticky md:top-10 md:self-start">
+          <aside className="col-span-4 md:col-span-3 flex flex-col gap-6 md:sticky md:top-10 md:self-start">
             <Meta label="Discipline">{capitalise(d.label)}</Meta>
             <Meta label="Context">{page.context}</Meta>
-            <Meta label="Skills">{page.skills.join(", ")}</Meta>
+            <Meta label="Skills">
+              <ul>
+                {page.skills.map((k) => (
+                  <li key={k}>{k}</li>
+                ))}
+              </ul>
+            </Meta>
             <Meta label="Links">
               <ul>
                 {page.links.map((l) => (
@@ -138,9 +144,9 @@ export default async function ProjectPage({
             </Meta>
           </aside>
 
-          <div className="col-span-4 mt-12 md:col-span-8 md:mt-0">
-            <div className="lg:grid lg:grid-cols-8 lg:gap-x-6">
-              <div className="space-y-6 lg:col-span-6">
+          <div className="col-span-4 mt-12 md:col-span-9 md:mt-0">
+            <div className="lg:grid lg:grid-cols-9 lg:gap-x-6">
+              <div className="space-y-6 lg:col-span-7">
                 {page.intro.map((t) => (
                   <Copy key={t} text={t} />
                 ))}
