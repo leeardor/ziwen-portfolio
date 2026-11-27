@@ -56,7 +56,7 @@
   --color-quote: var(--quote);
   --font-sans: var(--font-schibsted);
   --font-serif: var(--font-garamond);
-  --font-hand: var(--font-reenie);
+  --font-hand: var(--font-note);
 }
 
 html {
@@ -150,8 +150,11 @@ html[data-splash] body { overflow: hidden; }
    left to right. Timings are set inline by MarginNote; plays once when scrolled into view. */
 .note-arrow path { stroke-dasharray: 1; stroke-dashoffset: 1; transition-property: stroke-dashoffset; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
 .note-on .note-arrow path { stroke-dashoffset: 0; }
-.note-line { clip-path: inset(-0.3em 100% -0.3em -0.3em); transition-property: clip-path; transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95); }
-.note-on .note-line { clip-path: inset(-0.3em -0.3em -0.3em -0.3em); }
+/* Homemade Apple loops reach well past the line box, so the window is padded 0.5em to the
+   sides and 0.7em up and down; it starts closed (zero width at the far left) so no stroke
+   shows before its turn. */
+.note-line { clip-path: inset(-0.7em calc(100% + 0.5em) -0.7em -0.5em); transition-property: clip-path; transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95); }
+.note-on .note-line { clip-path: inset(-0.7em -0.5em -0.7em -0.5em); }
 @media (prefers-reduced-motion: reduce) {
   .note-arrow path, .note-line { transition: none !important; }
 }

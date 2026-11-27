@@ -1,32 +1,36 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { queueNote } from "@/lib/note-queue";
 
-// A project image (or video) with Ziwen's handwritten note, drawn like pen marks in a margin.
-// - circle: an optional loose hand-drawn loop around the part of the image that matters,
-//   given as a box in percent of the image.
-// - arrow: always the same hand-drawn return key pointing back at the image (one style
-//   across the site; mixing styles looked messy).
-// - lines: two or three short lines, slightly tilted; lines never wrap, so keep them short.
-// When the image scrolls into view the circle and arrow draw themselves, then the lines are
-// written out one after another, left to right. Plays once; with reduced motion all is there.
-// Below 1024px the margin is too narrow, so the note sits under the image and the arrow
-// turns to point up.
+// A project image (or video) with Ziwen's handwritten note, like quick pen notes in a margin
+// (after Studio Ethos on Pinterest; a long leader line across the image was too loud). The
+// note is a few short lines in a connected pen hand, sitting at about the height of what
+// it talks about (`to.y`, percent of the image); a short curved flick with a small open
+// arrowhead points from the note to the image's edge.
+// - circle: an optional loose hand-drawn loop on the image (built, not in use for now).
+// When the image scrolls into view the arrow draws itself, then the note is written out line
+// by line, left to right. Plays once; with reduced motion everything is simply there.
+// From 1280px the note sits in the margin at about the height of its target; below that the
+// margin is too narrow, so the note sits under the image and the arrow flicks up to it.
 export type Note = {
   lines: string[];
+  to: { x: number; y: number };
   circle?: { x: number; y: number; w: number; h: number };
 };
 
-// The return-key arrow, [shaft, head], drawn in a 44 x 30 box, pointing left.
-const shaft = "M38 2c.6 5 .3 10 .2 15.5c-.1 2.2-1.6 3.3-4 3.4C25 21.2 15 20.6 5 21.3";
-const head = "M11 15.2L4.6 21.2l6.6 5.6";
+type Geo = { line: string; head: string };
 
 export default function MarginNote({ note, children }: { note?: Note; children: React.ReactNode }) {
-  const ref = useRef<HTMLElement>(null);
+  const fig = useRef<HTMLElement>(null);
+  const media = useRef<HTMLDivElement>(null);
+  const text = useRef<HTMLParagraphElement>(null);
   const [on, setOn] = useState(false);
+  const [geo, setGeo] = useState<Geo | null>(null);
 
+  // Play once when scrolled into view.
   useEffect(() => {
-    const el = ref.current;
+    const el = fig.current;
     if (!el || !note) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setOn(true);
@@ -35,8 +39,8 @@ export default function MarginNote({ note, children }: { note?: Note; children: 
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
-          setOn(true);
           io.disconnect();
+          queueNote(() => setOn(true)); // after the first scroll, one note at a time
         }
       },
       { rootMargin: "0px 0px -20% 0px" },
@@ -45,13 +49,55 @@ export default function MarginNote({ note, children }: { note?: Note; children: 
     return () => io.disconnect();
   }, [note]);
 
+  // The arrow, measured in the figure's own coordinates, redrawn whenever the layout changes.
+  useLayoutEffect(() => {
+    const f = fig.current, m = media.current, t = text.current;
+    if (!note || !f || !m || !t) return;
+    const draw = () => {
+      const fr = f.getBoundingClientRect(), mr = m.getBoundingClientRect(), tr = t.getBoundingClientRect();
+      const beside = tr.left >= mr.right - 1;
+      let sx: number, sy: number, ex: number, ey: number, c1: [number, number], c2: [number, number];
+      if (beside) {
+        // A short quick hook from just left of the first line to the image's edge,
+        // like a pen flick in a margin; it points at the image, not across it.
+        sx = tr.left - fr.left - 6;
+        sy = tr.top - fr.top + 12;
+        ex = mr.right - fr.left + 8;
+        ey = sy - 30;
+        c1 = [sx - 4, sy - 22];
+        c2 = [ex + 16, ey + 2];
+      } else {
+        // Note under the image: a short flick up to the image's bottom edge.
+        sx = tr.left - fr.left + 4;
+        sy = tr.top - fr.top - 6;
+        ex = sx + 26;
+        ey = mr.bottom - fr.top + 6;
+        c1 = [sx - 6, sy - 16];
+        c2 = [ex - 16, ey + 8];
+      }
+      // Small open arrowhead along the direction the line arrives in.
+      const a = Math.atan2(ey - c2[1], ex - c2[0]);
+      const h = 6, s = 0.55;
+      const p = (k: number) => `${ex - h * Math.cos(a + k)} ${ey - h * Math.sin(a + k)}`;
+      setGeo({
+        line: `M${sx} ${sy}C${c1[0]} ${c1[1]} ${c2[0]} ${c2[1]} ${ex} ${ey}`,
+        head: `M${p(s)}L${ex} ${ey}L${p(-s)}`,
+      });
+    };
+    draw();
+    const ro = new ResizeObserver(draw);
+    ro.observe(f);
+    document.fonts?.ready.then(draw);
+    return () => ro.disconnect();
+  }, [note]);
+
   const circle = note?.circle ? 420 : 0; // ms to draw the loop on the image
-  const arrow = 260; // ms to draw the arrow
+  const lead = 240; // ms to draw the arrow
   const perLine = 360; // ms to write one line
 
   return (
-    <figure ref={ref} className={`lg:grid lg:grid-cols-9 lg:gap-x-6 ${on ? "note-on" : ""}`}>
-      <div className="relative lg:col-span-7">
+    <figure ref={fig} className={`relative ${on ? "note-on" : ""}`}>
+      <div ref={media} className="relative">
         {children}
         {note?.circle && (
           <svg
@@ -65,36 +111,38 @@ export default function MarginNote({ note, children }: { note?: Note; children: 
             strokeWidth="1"
             strokeLinecap="round"
           >
-            {/* A loose loop that overshoots where it started, as a pen would. No
-                non-scaling-stroke: it breaks the dash maths and the loop stops short. */}
-            <path
-              pathLength={1}
-              style={{ transitionDuration: `${circle}ms` }}
-              d="M10 56C5 26 38 4 63 8C89 12 99 40 93 62C87 88 52 97 29 91C9 86 1 62 11 40C17 27 30 18 46 15"
-            />
+            {/* No non-scaling-stroke: it breaks the dash maths and the loop stops short. */}
+            <path pathLength={1} style={{ transitionDuration: `${circle}ms` }} d="M10 56C5 26 38 4 63 8C89 12 99 40 93 62C87 88 52 97 29 91C9 86 1 62 11 40C17 27 30 18 46 15" />
           </svg>
         )}
       </div>
       {note && (
-        <div aria-hidden className="mt-3 text-accent lg:col-span-2 lg:mt-0 lg:self-center">
-          <div className="w-fit origin-top-left -rotate-[5deg]">
-            <svg viewBox="0 0 44 30" className="note-arrow h-[1.25rem] w-auto rotate-90 lg:rotate-0" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-              <path pathLength={1} style={{ transitionDuration: `${arrow}ms`, transitionDelay: `${circle}ms` }} d={shaft} />
-              <path pathLength={1} style={{ transitionDuration: "120ms", transitionDelay: `${circle + arrow}ms` }} d={head} />
-            </svg>
-            <p className="mt-1 font-hand text-[1.5rem] leading-[1.1]">
+        <>
+          <div aria-hidden className="relative mt-10 text-accent xl:absolute xl:inset-y-0 xl:left-full xl:mt-0 xl:w-64">
+            {/* In the margin the note sits a little below its target, so the line curves up to it. */}
+            <p
+              ref={text}
+              className="w-fit origin-top-left -rotate-2 font-hand text-[0.9375rem] leading-[1.6] xl:absolute xl:left-8"
+              style={{ top: `calc(${Math.min(note.to.y, 78)}% + 20px)` }}
+            >
               {note.lines.map((l, i) => (
                 <span
                   key={l}
                   className="note-line block w-fit whitespace-nowrap"
-                  style={{ transitionDuration: `${perLine}ms`, transitionDelay: `${circle + arrow + 60 + i * perLine}ms` }}
+                  style={{ transitionDuration: `${perLine}ms`, transitionDelay: `${circle + lead + 40 + i * perLine}ms` }}
                 >
                   {l}
                 </span>
               ))}
             </p>
           </div>
-        </div>
+          {geo && (
+            <svg aria-hidden className="note-arrow pointer-events-none absolute inset-0 h-full w-full overflow-visible text-accent" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+              <path pathLength={1} style={{ transitionDuration: `${lead}ms`, transitionDelay: `${circle}ms` }} d={geo.line} />
+              <path pathLength={1} style={{ transitionDuration: "120ms", transitionDelay: `${circle + lead}ms` }} d={geo.head} />
+            </svg>
+          )}
+        </>
       )}
     </figure>
   );
