@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 // Rose follows the pointer: entering from the top fills the text from the top,
@@ -26,6 +27,20 @@ const fromTop = (host: Element, y: number) => {
 };
 
 export default function RiseDirection() {
+  // Clicking a link navigates without a pointerout, and Next keeps the page as it was
+  // (cacheComponents), so coming back showed the clicked word still rose. On every page
+  // change, every word jumps back to its rest colour (no animation).
+  const pathname = usePathname();
+  useEffect(() => {
+    document.querySelectorAll<HTMLElement>(".rise").forEach((el) => {
+      if (!el.style.backgroundPosition) return;
+      el.style.transition = "none";
+      el.style.backgroundPosition = "";
+      void el.offsetWidth;
+      el.style.transition = "";
+    });
+  }, [pathname]);
+
   useEffect(() => {
     const over = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
