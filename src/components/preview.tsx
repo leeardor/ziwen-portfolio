@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 // A highlighted word that links somewhere and shows an image on hover.
 export type Keyword = {
@@ -48,6 +48,23 @@ export function usePreview() {
     ref.current.style.transition = "";
     ref.current.style.opacity = "0";
   };
+
+  // Clicking a keyword navigates away without a pointerleave, and Next keeps the page as it
+  // was (cacheComponents), so coming back showed the old preview. Reset it, with no fade,
+  // whenever the page is put away or comes back.
+  useEffect(() => {
+    const reset = () => {
+      if (!ref.current) return;
+      ref.current.style.transition = "none";
+      ref.current.style.opacity = "0";
+    };
+    reset();
+    window.addEventListener("pageshow", reset);
+    return () => {
+      window.removeEventListener("pageshow", reset);
+      reset();
+    };
+  }, []);
 
   const box = (
     <div
