@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { scrollToTop } from "@/lib/lenis";
 
 // Project pages only: takes the place of the Notes / Index pill. Same pill, fixed in the
 // pill's corner, fades in (200ms) once the page has scrolled half a screen; at the end of
@@ -16,6 +15,12 @@ export default function ToTop() {
     return () => window.removeEventListener("scroll", check);
   }, []);
 
+
+  // The browser's own glide back up; a plain jump with reduced motion.
+  const scrollToTop = () => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  };
 
   return (
     <button

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, EB_Garamond, Homemade_Apple } from "next/font/google";
 import RiseDirection from "@/components/RiseDirection";
-import SmoothScroll from "@/components/SmoothScroll";
 import Splash from "@/components/Splash";
 import "./globals.css";
 
@@ -51,7 +50,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Splash />
         <RiseDirection />
-        <SmoothScroll />
         {children}
       </body>
     </html>
