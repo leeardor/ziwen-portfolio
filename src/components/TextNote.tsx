@@ -44,7 +44,13 @@ export default function TextNote({ text, note, mark = "underline" }: { text: str
     const b = box.current, m = phrase.current;
     if (!b) return;
     const measure = () => {
-      if (whole || !m) return setSize({ w: b.offsetWidth, h: b.offsetHeight, top: 0 });
+      // A bracket spans the paragraph only (not the note under it on small screens). Below
+      // 1280px the text runs to the 16px gutter, so the bracket moves in closer to stay on screen.
+      if (whole || !m) {
+        const copy = b.firstElementChild as HTMLElement;
+        const wide = window.matchMedia("(min-width: 1280px)").matches;
+        return setSize({ w: b.offsetWidth - (wide ? 0 : 10), h: copy.offsetHeight, top: 0 });
+      }
       setSize({ w: m.offsetWidth, h: m.offsetHeight, top: m.getBoundingClientRect().top - b.getBoundingClientRect().top });
     };
     measure();

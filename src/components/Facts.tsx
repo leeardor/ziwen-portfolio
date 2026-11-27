@@ -6,8 +6,9 @@ export type Fact = { label: string; value: React.ReactNode };
 
 // Project page frame, read like an article: one centred column (columns 4 to 9 on wide
 // screens, 2 to 11 on tablets, full width on phones) holding the title, the facts in one row,
-// a hairline, then the story. Once the facts row has scrolled away, the same facts fade in
-// (200ms) in the empty left margin and stay there while you read (wide screens only).
+// a hairline, then the story. Once the facts row has scrolled away, the title and the same
+// facts fade in (200ms) in the empty left margin and stay there while you read (wide screens
+// only).
 export default function Facts({
   title,
   facts,
@@ -42,6 +43,7 @@ export default function Facts({
         inert={!side}
         className={`hidden flex-col gap-6 transition-opacity duration-200 xl:sticky xl:top-10 xl:col-span-3 xl:row-start-1 xl:flex xl:self-start ${side ? "opacity-100" : "pointer-events-none opacity-0"}`}
       >
+        {title}
         {facts.map(item)}
       </aside>
       <article className="col-span-4 md:col-span-10 md:col-start-2 xl:col-span-6 xl:col-start-4 xl:row-start-1">
