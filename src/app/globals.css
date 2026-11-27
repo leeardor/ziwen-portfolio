@@ -138,12 +138,17 @@ html[data-splash] body { overflow: hidden; }
 @media (hover: hover) {
   .back:hover { color: var(--accent); }
 }
-.pill { transition: border-color 450ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+/* Pills: the border turns rose with the text (450ms); pressing scales the pill down a touch
+   (100ms) so the press is felt, after Emil Kowalski's "purposeful" button feedback. Opacity is
+   here too: this rule outranks Tailwind utilities, so the Top pill's fade-in lives here. */
+.pill { transition: border-color 450ms cubic-bezier(0.2, 0.7, 0.2, 1), scale 100ms ease-out, opacity 200ms ease; }
+.pill:active { scale: 0.97; }
 @media (hover: hover) {
   .pill:hover { border-color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) {
   .rise, .pill, .back { transition: none; }
+  .pill:active { scale: none; }
 }
 
 /* Margin notes on project pages: the arrow draws itself, then each line is written out

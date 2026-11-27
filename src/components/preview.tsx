@@ -16,8 +16,11 @@ const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // One hover preview box shared by every keyword on a page (desktop only).
 // Pointer position goes straight to the DOM via a ref: no React render per frame.
+// After Emil Kowalski's tooltip rule: the first preview fades in (150ms); moving straight on to
+// the next keyword or row swaps the picture at once, with no fade out and in.
 export function usePreview() {
   const ref = useRef<HTMLDivElement>(null);
+  const hidAt = useRef(0);
 
   const show = (k: Keyword) => {
     const el = ref.current;
@@ -26,6 +29,7 @@ export function usePreview() {
     const img = k.image ? `url(${k.image}) center / cover, ` : "";
     el.style.background = `linear-gradient(to top, rgb(18 18 18 / 0.45), transparent 35%), ${img}${k.preview}`;
     el.textContent = k.caption ?? capitalise(k.label);
+    el.style.transition = performance.now() - hidAt.current < 250 ? "none" : "";
     el.style.opacity = "1";
   };
   const move = (e: React.PointerEvent) => {
@@ -39,7 +43,10 @@ export function usePreview() {
     el.style.transform = `translate(${cx}px, ${cy}px)`;
   };
   const hide = () => {
-    if (ref.current) ref.current.style.opacity = "0";
+    if (!ref.current) return;
+    hidAt.current = performance.now();
+    ref.current.style.transition = "";
+    ref.current.style.opacity = "0";
   };
 
   const box = (
